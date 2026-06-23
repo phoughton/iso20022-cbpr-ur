@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="urn:swift:xsd:envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<head:AppHdr xmlns:head="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+		<head:Fr>
+			<head:FIId>
+				<head:FinInstnId>
+					<head:BICFI>KRMTJP2X</head:BICFI>
+				</head:FinInstnId>
+			</head:FIId>
+		</head:Fr>
+		<head:To>
+			<head:FIId>
+				<head:FinInstnId>
+					<head:BICFI>PLNFSGSX</head:BICFI>
+				</head:FinInstnId>
+			</head:FIId>
+		</head:To>
+		<head:BizMsgIdr>P009-20260413-6201</head:BizMsgIdr>
+		<head:MsgDefIdr>pacs.009.001.08</head:MsgDefIdr>
+		<head:BizSvc>swift.cbprplus.03</head:BizSvc>
+		<head:CreDt>2026-04-13T11:45:00+00:00</head:CreDt>
+	</head:AppHdr>
+	<pacs:Document xmlns:pacs="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+		<pacs:FICdtTrf>
+			<pacs:GrpHdr>
+				<pacs:MsgId>P009-20260413-6201</pacs:MsgId>
+				<pacs:CreDtTm>2026-04-13T11:45:00+00:00</pacs:CreDtTm>
+				<pacs:NbOfTxs>1</pacs:NbOfTxs>
+				<pacs:SttlmInf>
+					<pacs:SttlmMtd>INDA</pacs:SttlmMtd>
+				</pacs:SttlmInf>
+			</pacs:GrpHdr>
+			<pacs:CdtTrfTxInf>
+				<pacs:PmtId>
+					<pacs:InstrId>IN20260413-6201</pacs:InstrId>
+					<pacs:EndToEndId>E2E-04137745</pacs:EndToEndId>
+					<pacs:UETR>b2c3d4e5-f6a7-4901-bcde-f12345678901</pacs:UETR>
+				</pacs:PmtId>
+				<pacs:IntrBkSttlmAmt Ccy="XAU">45000000</pacs:IntrBkSttlmAmt>
+				<pacs:IntrBkSttlmDt>2026-04-13</pacs:IntrBkSttlmDt>
+				<pacs:InstgAgt>
+					<pacs:FinInstnId>
+						<pacs:BICFI>KRMTJP2X</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:InstgAgt>
+				<pacs:InstdAgt>
+					<pacs:FinInstnId>
+						<pacs:BICFI>PLNFSGSX</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:InstdAgt>
+				<pacs:Dbtr>
+					<pacs:FinInstnId>
+						<pacs:BICFI>KRMTJP2X</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:Dbtr>
+				<pacs:Cdtr>
+					<pacs:FinInstnId>
+						<pacs:BICFI>PLNFSGSX</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:Cdtr>
+			</pacs:CdtTrfTxInf>
+		</pacs:FICdtTrf>
+	</pacs:Document>
+</Envelope>

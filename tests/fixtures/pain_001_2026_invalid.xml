@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>AAAAGB2LXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BBBBDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>WRONG-BAH-ID</BizMsgIdr>
+    <MsgDefIdr>pain.001.001.09</MsgDefIdr>
+    <BizSvc>swift.cbprplus.03</BizSvc>
+    <CreDt>2026-06-01T10:00:00Z</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09">
+    <CstmrCdtTrfInitn>
+      <GrpHdr>
+        <MsgId>MSGID-0001</MsgId>
+        <CreDtTm>2026-06-01T10:00:00Z</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <InitgPty>
+          <Nm>Initiating Party Ltd</Nm>
+        </InitgPty>
+      </GrpHdr>
+      <PmtInf>
+        <PmtInfId>DIFFERENT-PMT-ID</PmtInfId>
+        <PmtMtd>TRF</PmtMtd>
+        <ReqdExctnDt>
+          <Dt>2026-06-02</Dt>
+        </ReqdExctnDt>
+        <Dbtr>
+          <PstlAdr>
+            <TwnNm>London</TwnNm>
+            <Ctry>GB</Ctry>
+          </PstlAdr>
+        </Dbtr>
+        <DbtrAcct>
+          <Id>
+            <IBAN>GB29NWBK60161331926819</IBAN>
+          </Id>
+        </DbtrAcct>
+        <DbtrAgt>
+          <FinInstnId>
+            <BICFI>NOTAVALIDBIC</BICFI>
+            <Nm>Debtor Agent Bank</Nm>
+          </FinInstnId>
+        </DbtrAgt>
+        <CdtTrfTxInf>
+          <PmtId>
+            <InstrId>INSTR-0001</InstrId>
+            <EndToEndId>E2E-0001</EndToEndId>
+          </PmtId>
+          <Amt>
+            <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+          </Amt>
+          <CdtrAgt>
+            <FinInstnId>
+              <BICFI>BBBBDEFFXXX</BICFI>
+            </FinInstnId>
+          </CdtrAgt>
+          <Cdtr>
+            <Nm>Beta Creditor GmbH</Nm>
+            <PstlAdr>
+              <TwnNm>Frankfurt</TwnNm>
+              <Ctry>DE</Ctry>
+              <AdrLine>Frankfurt</AdrLine>
+            </PstlAdr>
+          </Cdtr>
+          <CdtrAcct>
+            <Id>
+              <IBAN>DE89370400440532013000</IBAN>
+            </Id>
+          </CdtrAcct>
+          <InstrForCdtrAgt>
+            <Cd>CHQB</Cd>
+          </InstrForCdtrAgt>
+          <InstrForCdtrAgt>
+            <Cd>HOLD</Cd>
+          </InstrForCdtrAgt>
+          <RmtInf>
+            <Ustrd>Invoice 12345</Ustrd>
+          </RmtInf>
+        </CdtTrfTxInf>
+      </PmtInf>
+    </CstmrCdtTrfInitn>
+  </Document>
+</RequestPayload>

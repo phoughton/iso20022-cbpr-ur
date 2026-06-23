@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>AAAAGB2LXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BBBBDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSGID-9999</BizMsgIdr>
+    <MsgDefIdr>pacs.999.001.99</MsgDefIdr>
+    <BizSvc>swift.cbprplus.03</BizSvc>
+    <CreDt>2026-06-01T10:00:00Z</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10">
+    <FIToFIPmtStsRpt>
+      <GrpHdr>
+        <MsgId>MSGID-0001</MsgId>
+        <CreDtTm>2026-06-01T10:00:00Z</CreDtTm>
+      </GrpHdr>
+      <TxInfAndSts>
+        <OrgnlGrpInf>
+          <OrgnlMsgId>ORGMSG-0001</OrgnlMsgId>
+          <OrgnlMsgNmId>camt.999.001.01</OrgnlMsgNmId>
+        </OrgnlGrpInf>
+        <OrgnlInstrId>/INSTR-0001</OrgnlInstrId>
+        <TxSts>RJCT</TxSts>
+        <StsRsnInf>
+          <Orgtr>
+            <PstlAdr>
+              <TwnNm>London</TwnNm>
+              <Ctry>GB</Ctry>
+              <AdrLine>London</AdrLine>
+            </PstlAdr>
+          </Orgtr>
+        </StsRsnInf>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>ZZZZGB2LXXX</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+      </TxInfAndSts>
+    </FIToFIPmtStsRpt>
+  </Document>
+</RequestPayload>

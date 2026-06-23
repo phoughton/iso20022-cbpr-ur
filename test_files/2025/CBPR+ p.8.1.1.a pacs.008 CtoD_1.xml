@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+THE MESSAGE WILL WORK �AS IS� IN THE READINESS PORTAL. IT IS ESSENTIAL THAT USERS REMOVE THE ENVELOPE AND REPLACE IT WITH THEIR OWN TRANSPORT HEADER (FOR EXAMPLE FOR ALLIANCE ACCESS YOU WOULD USE THE XML V2 HEADERS).
+=========================================================================================================================================================================================
+SWIFT � 2020. All rights reserved. 
+This publication contains SWIFT or third-party confidential information. Do not disclose this publication outside your organisation without SWIFT�s prior written consent.
+The use of this document is governed by the legal notices appearing at the end of this document. By using this document, you will be deemed to have accepted those legal notices.
+====================================================================================================================================================================
+p.8.1.1.aAgent C Banca Romana DCSI sends a pacs.008 to D INTESA SANPAOLO ROMANIA S.A.
+========================================================================================================================
+-->
+<Envelope xmlns="urn:swift:xsd:envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<head:AppHdr xmlns:head="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+		<head:Fr>
+			<head:FIId>
+				<head:FinInstnId>
+					<head:BICFI>MINDROBU</head:BICFI>
+				</head:FinInstnId>
+			</head:FIId>
+		</head:Fr>
+		<head:To>
+			<head:FIId>
+				<head:FinInstnId>
+					<head:BICFI>WBANRO22</head:BICFI>
+				</head:FinInstnId>
+			</head:FIId>
+		</head:To>
+		<head:BizMsgIdr>pcs008bzmsgidr-4</head:BizMsgIdr>
+		<head:MsgDefIdr>pacs.008.001.08</head:MsgDefIdr>
+		<head:BizSvc>swift.cbprplus.02</head:BizSvc>
+		<head:CreDt>2022-10-20T10:35:00+00:00</head:CreDt>
+	</head:AppHdr>
+	<pacs:Document xmlns:pacs="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+		<pacs:FIToFICstmrCdtTrf>
+			<pacs:GrpHdr>
+				<pacs:MsgId>pcs008bzmsgidr-4</pacs:MsgId>
+				<pacs:CreDtTm>2022-10-20T10:35:00+00:00</pacs:CreDtTm>
+				<pacs:NbOfTxs>1</pacs:NbOfTxs>
+				<pacs:SttlmInf>
+					<pacs:SttlmMtd>INGA</pacs:SttlmMtd>
+				</pacs:SttlmInf>
+			</pacs:GrpHdr>
+			<pacs:CdtTrfTxInf>
+				<pacs:PmtId>
+					<pacs:InstrId>pcs008bzmsgidr-4</pacs:InstrId>
+					<pacs:EndToEndId>E2E04044506271305</pacs:EndToEndId>
+					<pacs:UETR>8f4f8b1d-2f56-46fd-816c-d41552bc93f7</pacs:UETR>
+				</pacs:PmtId>
+				<pacs:PmtTpInf>
+					<pacs:SvcLvl>
+						<pacs:Cd>SPLI</pacs:Cd>
+					</pacs:SvcLvl>
+				</pacs:PmtTpInf>
+				<pacs:IntrBkSttlmAmt Ccy="RON">10000000</pacs:IntrBkSttlmAmt>
+				<pacs:IntrBkSttlmDt>2022-10-20</pacs:IntrBkSttlmDt>
+				<pacs:ChrgBr>DEBT</pacs:ChrgBr>
+				<pacs:PrvsInstgAgt1>
+					<pacs:FinInstnId>
+						<pacs:BICFI>BTRLRO22</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:PrvsInstgAgt1>
+				<pacs:InstgAgt>
+					<pacs:FinInstnId>
+						<pacs:BICFI>MINDROBU</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:InstgAgt>
+				<pacs:InstdAgt>
+					<pacs:FinInstnId>
+						<pacs:BICFI>WBANRO22</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:InstdAgt>
+				<pacs:Dbtr>
+					<pacs:Nm>Debtor Co</pacs:Nm>
+					<pacs:PstlAdr>
+						<pacs:StrtNm>35 Strada Negru Voda</pacs:StrtNm>
+						<pacs:TwnNm>Bucuresti</pacs:TwnNm>
+						<pacs:Ctry>RO</pacs:Ctry>
+					</pacs:PstlAdr>
+				</pacs:Dbtr>
+				<pacs:DbtrAcct>
+					<pacs:Id>
+						<pacs:Othr>
+							<pacs:Id>25698745</pacs:Id>
+						</pacs:Othr>
+					</pacs:Id>
+				</pacs:DbtrAcct>
+				<pacs:DbtrAgt>
+					<pacs:FinInstnId>
+						<pacs:BICFI>BRDEROBU</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:DbtrAgt>
+				<pacs:CdtrAgt>
+					<pacs:FinInstnId>
+						<pacs:BICFI>WBANRO22</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:CdtrAgt>
+				<pacs:Cdtr>
+					<pacs:Nm>Supplier B</pacs:Nm>
+					<pacs:PstlAdr>
+						<pacs:StrtNm>Calea Victoriei 63</pacs:StrtNm>
+						<pacs:TwnNm>Bucuresti</pacs:TwnNm>
+						<pacs:Ctry>RO</pacs:Ctry>
+					</pacs:PstlAdr>
+				</pacs:Cdtr>
+				<pacs:CdtrAcct>
+					<pacs:Id>
+						<pacs:Othr>
+							<pacs:Id>65479512</pacs:Id>
+						</pacs:Othr>
+					</pacs:Id>
+				</pacs:CdtrAcct>
+			</pacs:CdtTrfTxInf>
+		</pacs:FIToFICstmrCdtTrf>
+	</pacs:Document>
+</Envelope>

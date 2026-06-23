@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="urn:swift:xsd:envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<head:AppHdr xmlns:head="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+		<head:Fr>
+			<head:FIId>
+				<head:FinInstnId>
+					<head:BICFI>RVNTGB2L</head:BICFI>
+				</head:FinInstnId>
+			</head:FIId>
+		</head:Fr>
+		<head:To>
+			<head:FIId>
+				<head:FinInstnId>
+					<head:BICFI>HDQCFR2X</head:BICFI>
+				</head:FinInstnId>
+			</head:FIId>
+		</head:To>
+		<head:BizMsgIdr>P004-20260413-3390</head:BizMsgIdr>
+		<head:MsgDefIdr>pacs.004.001.09</head:MsgDefIdr>
+		<head:BizSvc>swift.cbprplus.02</head:BizSvc>
+		<head:CreDt>2026-04-13T14:20:00+00:00</head:CreDt>
+	</head:AppHdr>
+	<pacs:Document xmlns:pacs="urn:iso:std:iso:20022:tech:xsd:pacs.004.001.09">
+		<pacs:PmtRtr>
+			<pacs:GrpHdr>
+				<pacs:MsgId>P004-20260413-3390</pacs:MsgId>
+				<pacs:CreDtTm>2026-04-13T14:20:00+00:00</pacs:CreDtTm>
+				<pacs:NbOfTxs>1</pacs:NbOfTxs>
+				<pacs:SttlmInf>
+					<pacs:SttlmMtd>INDA</pacs:SttlmMtd>
+				</pacs:SttlmInf>
+			</pacs:GrpHdr>
+			<pacs:TxInf>
+				<pacs:RtrId>RTR20260413-3390</pacs:RtrId>
+				<pacs:OrgnlGrpInf>
+					<pacs:OrgnlMsgId>P008-20260412-1100</pacs:OrgnlMsgId>
+					<pacs:OrgnlMsgNmId>pacs.008.001.08</pacs:OrgnlMsgNmId>
+				</pacs:OrgnlGrpInf>
+				<pacs:OrgnlInstrId>IN20260412-1100</pacs:OrgnlInstrId>
+				<pacs:OrgnlEndToEndId>E2E-04124421</pacs:OrgnlEndToEndId>
+				<pacs:OrgnlUETR>c3d4e5f6-a7b8-4012-9def-123456789012</pacs:OrgnlUETR>
+				<pacs:RtrdIntrBkSttlmAmt Ccy="GBP">125000</pacs:RtrdIntrBkSttlmAmt>
+				<pacs:IntrBkSttlmDt>2026-04-13</pacs:IntrBkSttlmDt>
+				<pacs:RtrdInstdAmt Ccy="GBP">125000</pacs:RtrdInstdAmt>
+				<pacs:ChrgBr>SHAR</pacs:ChrgBr>
+				<pacs:InstgAgt>
+					<pacs:FinInstnId>
+						<pacs:BICFI>RVNTGB2L</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:InstgAgt>
+				<pacs:InstdAgt>
+					<pacs:FinInstnId>
+						<pacs:BICFI>HDQCFR2X</pacs:BICFI>
+					</pacs:FinInstnId>
+				</pacs:InstdAgt>
+				<pacs:RtrChain>
+					<pacs:Dbtr>
+						<pacs:Pty>
+							<pacs:Nm>Nmx5x7x9x12x15x18x21x24x27x30x33x36x39x42x45x48x51x54x57x60x63x66x69x72x75x78x81x84x87x90x93x96x100x104x108x112x116x120x124x128x132x136x140x</pacs:Nm>
+						</pacs:Pty>
+					</pacs:Dbtr>
+					<pacs:Cdtr>
+						<pacs:Pty>
+							<pacs:Nm>Nmx5x7x9x12x15x18x21x24x27x30x33x36x39x42x45x48x51x54x57x60x63x66x69x72x75x78x81x84x87x90x93x96x100x104x108x112x116x120x124x128x132x136x140x</pacs:Nm>
+						</pacs:Pty>
+					</pacs:Cdtr>
+				</pacs:RtrChain>
+				<pacs:RtrRsnInf>
+					<pacs:Orgtr>
+						<pacs:Nm>Nmx5x7x9x12x15x18x21x24x27x30x33x36x39x42x45x48x51x54x57x60x63x66x69x72x75x78x81x84x87x90x93x96x100x104x108x112x116x120x124x128x132x136x140x</pacs:Nm>
+					</pacs:Orgtr>
+					<pacs:Rsn>
+						<pacs:Cd>AC04</pacs:Cd>
+					</pacs:Rsn>
+				</pacs:RtrRsnInf>
+				<pacs:OrgnlTxRef>
+					<pacs:IntrBkSttlmAmt Ccy="GBP">125000</pacs:IntrBkSttlmAmt>
+					<pacs:IntrBkSttlmDt>2026-04-12</pacs:IntrBkSttlmDt>
+					<pacs:Dbtr>
+						<pacs:Pty>
+							<pacs:Nm>Nmx5x7x9x12x15x18x21x24x27x30x33x36x39x42x45x48x51x54x57x60x63x66x69x72x75x78x81x84x87x90x93x96x100x104x108x112x116x120x124x128x132x136x140x</pacs:Nm>
+						</pacs:Pty>
+					</pacs:Dbtr>
+					<pacs:Cdtr>
+						<pacs:Pty>
+							<pacs:Nm>Nmx5x7x9x12x15x18x21x24x27x30x33x36x39x42x45x48x51x54x57x60x63x66x69x72x75x78x81x84x87x90x93x96x100x104x108x112x116x120x124x128x132x136x140x</pacs:Nm>
+						</pacs:Pty>
+					</pacs:Cdtr>
+				</pacs:OrgnlTxRef>
+			</pacs:TxInf>
+		</pacs:PmtRtr>
+	</pacs:Document>
+</Envelope>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>AAAAGB2LXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BBBBDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>BMI-MSGID-0001</BizMsgIdr>
+    <MsgDefIdr>pacs.008.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.03</BizSvc>
+    <CreDt>2025-06-01T10:00:00Z</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+      <GrpHdr>
+        <MsgId>MSGID-0001</MsgId>
+        <CreDtTm>2025-06-01T10:00:00Z</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>INSTR-0001</InstrId>
+          <EndToEndId>E2E-0001</EndToEndId>
+          <TxId>TX-0001</TxId>
+        </PmtId>
+        <IntrBkSttlmAmt Ccy="EUR">1000.00</IntrBkSttlmAmt>
+        <ChrgBr>SHAR</ChrgBr>
+        <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>AAAAGB2LXXX</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <Dbtr>
+          <Nm>Acme Debtor Ltd</Nm>
+          <PstlAdr>
+            <StrtNm>High Street</StrtNm>
+            <TwnNm>London</TwnNm>
+            <Ctry>GB</Ctry>
+            <AdrLine>Suite 4</AdrLine>
+          </PstlAdr>
+        </Dbtr>
+        <DbtrAgt>
+          <FinInstnId>
+            <BICFI>AAAAGB2LXXX</BICFI>
+          </FinInstnId>
+        </DbtrAgt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Beta Creditor GmbH</Nm>
+        </Cdtr>
+      </CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+  </Document>
+</RequestPayload>

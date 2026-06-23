@@ -131,3 +131,15 @@ dmypy.json
 
 ttyrecord
 ttylog
+
+raw_rules_files/*
+!raw_rules_files/.gitkeep
+# Re-include the year dirs so git descends into them, then ignore their
+# contents, then re-include the .gitkeep placeholders. (A parent directory must
+# be re-included before any file inside it can be.)
+!raw_rules_files/2025/
+!raw_rules_files/2026/
+raw_rules_files/2025/*
+raw_rules_files/2026/*
+!raw_rules_files/2025/.gitkeep
+!raw_rules_files/2026/.gitkeep

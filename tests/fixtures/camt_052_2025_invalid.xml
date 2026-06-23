@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>AAAAGB2LXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BBBBDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>UNRELATED-HEADER-ID</BizMsgIdr>
+    <MsgDefIdr>camt.053.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.99</BizSvc>
+    <CreDt>2025-06-01T10:00:00Z</CreDt>
+    <CpyDplct>COPY</CpyDplct>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.08">
+    <BkToCstmrAcctRpt>
+      <GrpHdr>
+        <MsgId>MSGID-0002</MsgId>
+        <CreDtTm>2025-06-01T10:00:00Z</CreDtTm>
+      </GrpHdr>
+      <Rpt>
+        <Id>RPT-0002</Id>
+        <CreDtTm>2025-06-01T10:00:00Z</CreDtTm>
+        <CpyDplctInd>DUPL</CpyDplctInd>
+        <Acct>
+          <Id>
+            <IBAN>GB29NWBK60161331926819</IBAN>
+          </Id>
+          <Ownr>
+            <PstlAdr>
+              <TwnNm>London</TwnNm>
+              <Ctry>GB</Ctry>
+            </PstlAdr>
+          </Ownr>
+          <Svcr>
+            <FinInstnId>
+              <BICFI>AAAAGB2LXXX</BICFI>
+            </FinInstnId>
+          </Svcr>
+        </Acct>
+        <Bal>
+          <Tp>
+            <CdOrPrtry>
+              <Cd>ITBD</Cd>
+            </CdOrPrtry>
+          </Tp>
+          <Amt Ccy="EU">1000.00</Amt>
+          <CdtDbtInd>CRDT</CdtDbtInd>
+        </Bal>
+        <Ntry>
+          <Amt Ccy="EUR">250.00</Amt>
+          <CdtDbtInd>CRDT</CdtDbtInd>
+          <Sts>
+            <Cd>BOOK</Cd>
+          </Sts>
+          <Intrst>
+            <TtlIntrstAndTaxAmt Ccy="EUR">100.00</TtlIntrstAndTaxAmt>
+            <Rcrd>
+              <Amt Ccy="EUR">30.00</Amt>
+            </Rcrd>
+            <Rcrd>
+              <Amt Ccy="EUR">40.00</Amt>
+            </Rcrd>
+          </Intrst>
+          <NtryDtls>
+            <TxDtls>
+              <Refs>
+                <InstrId>/INSTR-0001/</InstrId>
+              </Refs>
+            </TxDtls>
+          </NtryDtls>
+        </Ntry>
+      </Rpt>
+    </BkToCstmrAcctRpt>
+  </Document>
+</RequestPayload>

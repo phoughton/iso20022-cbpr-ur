@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>AAAAGB2LXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BBBBDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSGID-0002</BizMsgIdr>
+    <MsgDefIdr>pacs.002.001.10</MsgDefIdr>
+    <BizSvc>swift.cbprplus.03</BizSvc>
+    <CreDt>2025-06-01T10:00:00Z</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10">
+    <FIToFIPmtStsRpt>
+      <GrpHdr>
+        <MsgId>MSGID-0002</MsgId>
+        <CreDtTm>2025-06-01T10:00:00Z</CreDtTm>
+      </GrpHdr>
+      <TxInfAndSts>
+        <OrgnlInstrId>ORIG-INSTR-0001</OrgnlInstrId>
+        <OrgnlEndToEndId>E2E-0001</OrgnlEndToEndId>
+        <OrgnlTxId>TX-0001</OrgnlTxId>
+        <OrgnlUETR>e0c4d4e2-1234-4a9b-b8f1-0123456789ab</OrgnlUETR>
+        <TxSts>RJCT</TxSts>
+        <StsRsnInf>
+          <Orgtr>
+            <Nm>Reason Originator Bank</Nm>
+            <Id>
+              <OrgId>
+                <AnyBIC>AAAAGB2LXXX</AnyBIC>
+                <LEI>529900T8BM49AURSDO55</LEI>
+              </OrgId>
+            </Id>
+            <PstlAdr>
+              <TwnNm>London</TwnNm>
+              <Ctry>GB</Ctry>
+            </PstlAdr>
+          </Orgtr>
+          <Rsn>
+            <Cd>AC01</Cd>
+          </Rsn>
+        </StsRsnInf>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>AAAAGB2LXXX</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+      </TxInfAndSts>
+    </FIToFIPmtStsRpt>
+  </Document>
+</RequestPayload>

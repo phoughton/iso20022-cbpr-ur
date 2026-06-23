@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>AAAAGB2LXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BBBBDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>RTRMSG-0001</BizMsgIdr>
+    <MsgDefIdr>pacs.004.001.09</MsgDefIdr>
+    <BizSvc>swift.cbprplus.03</BizSvc>
+    <CreDt>2025-06-01T10:00:00Z</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.004.001.09">
+    <PmtRtr>
+      <GrpHdr>
+        <MsgId>RTRMSG-0001</MsgId>
+        <CreDtTm>2025-06-01T10:00:00Z</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <TxInf>
+        <RtrId>RTR-0001</RtrId>
+        <OrgnlGrpInf>
+          <OrgnlMsgId>ORIG-0001</OrgnlMsgId>
+          <OrgnlMsgNmId>foo.123.456.78</OrgnlMsgNmId>
+        </OrgnlGrpInf>
+        <OrgnlInstrId>ORIGINSTR-0001</OrgnlInstrId>
+        <OrgnlIntrBkSttlmAmt Ccy="XAU">1000.00</OrgnlIntrBkSttlmAmt>
+        <RtrdIntrBkSttlmAmt Ccy="EUR">1000.00</RtrdIntrBkSttlmAmt>
+        <ChrgBr>SHAR</ChrgBr>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>ZZZZGB2LXXX</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <RtrChain>
+          <Dbtr>
+            <Pty>
+              <PstlAdr>
+                <TwnNm>London</TwnNm>
+                <Ctry>GB</Ctry>
+              </PstlAdr>
+            </Pty>
+          </Dbtr>
+          <CdtrAgt>
+            <FinInstnId>
+              <BICFI>BBBBDEFFXXX</BICFI>
+            </FinInstnId>
+          </CdtrAgt>
+          <Cdtr>
+            <Pty>
+              <Nm>Beta Creditor GmbH</Nm>
+              <Id>
+                <OrgId>
+                  <AnyBIC>BBBBDEFFXXX</AnyBIC>
+                </OrgId>
+              </Id>
+            </Pty>
+          </Cdtr>
+        </RtrChain>
+        <RtrRsnInf>
+          <Orgtr>
+            <PstlAdr>
+              <TwnNm>Paris</TwnNm>
+              <Ctry>FR</Ctry>
+            </PstlAdr>
+          </Orgtr>
+          <Rsn>
+            <Cd>AC04</Cd>
+          </Rsn>
+        </RtrRsnInf>
+        <OrgnlTxRef>
+          <IntrBkSttlmAmt Ccy="EUR">1000.00</IntrBkSttlmAmt>
+          <Cdtr>
+            <Pty>
+              <Nm>Beta Creditor GmbH</Nm>
+            </Pty>
+          </Cdtr>
+        </OrgnlTxRef>
+      </TxInf>
+    </PmtRtr>
+  </Document>
+</RequestPayload>

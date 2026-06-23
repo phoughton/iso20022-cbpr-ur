@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>AAAAGB2LXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BBBBDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSGID-0001</BizMsgIdr>
+    <MsgDefIdr>pacs.009.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.03</BizSvc>
+    <CreDt>2026-06-01T10:00:00Z</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+    <FICdtTrf>
+      <GrpHdr>
+        <MsgId>MSGID-0001</MsgId>
+        <CreDtTm>2026-06-01T10:00:00Z</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>INSTR-0001</InstrId>
+          <EndToEndId>E2E-0001</EndToEndId>
+          <TxId>TX-0001</TxId>
+          <UETR>e1c4c8a2-3b6f-4f7a-9c2e-1a2b3c4d5e6f</UETR>
+        </PmtId>
+        <PmtTpInf>
+          <SvcLvl>
+            <Cd>G004</Cd>
+          </SvcLvl>
+        </PmtTpInf>
+        <IntrBkSttlmAmt Ccy="EUR">1000.00</IntrBkSttlmAmt>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>AAAAGB2LXXX</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <Dbtr>
+          <FinInstnId>
+            <BICFI>AAAAGB2LXXX</BICFI>
+          </FinInstnId>
+        </Dbtr>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <FinInstnId>
+            <BICFI>CCCCFRPPXXX</BICFI>
+          </FinInstnId>
+        </Cdtr>
+      </CdtTrfTxInf>
+    </FICdtTrf>
+  </Document>
+</RequestPayload>

@@ -1,0 +1,28 @@
+# Changelog
+
+All notable changes to this project are documented here. The format is based on
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
+to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+- Initial package: validation engine, wrapper-tolerant loader, public API
+  (`validate_file`, `validate_string`, `list_rules`, `available`), and the
+  `cbpr-validate` CLI (text + JSON output).
+- Algorithmic validators: IBAN, LEI, BIC, ISO 3166-1 country, ISO 4217 currency.
+- CBPR+ SR2025 / SR2026 usage rules per message type.
+- Violations report `detail` (why this instance failed) and `found` (the
+  offending XML); the CLI wraps output and summarises advisory rules unless
+  `--advisory` is passed.
+- Promoted mechanizable textual rules from advisory to enforced: header↔message
+  consistency (`MsgDefIdr`, `BizMsgIdr`), Postal Address / AddressLine
+  duplication, `AnyBIC` presence exclusivity, Structured Remittance length, and
+  conditional charge / amount-sum checks. Contextual rules (referring to a
+  related/underlying message, network, jurisdiction, or recommendation) remain
+  advisory.
+- Optional XSD schema validation: pass `xsd=` (a path or list) to
+  `validate_file`/`validate_string`, or `--xsd PATH` (repeatable) on the CLI. XSDs
+  are auto-matched to the Document or AppHdr by `targetNamespace` and reported in a
+  separate `xsd` result block / CLI section. XSD files are not bundled. The CLI
+  exit code is non-zero on usage-rule OR schema failure.

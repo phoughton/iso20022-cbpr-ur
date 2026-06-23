@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>AAAAGB2LXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BBBBDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSGID-0009</BizMsgIdr>
+    <MsgDefIdr>pacs.009.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.03</BizSvc>
+    <CreDt>2025-06-01T10:00:00Z</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+    <FICdtTrf>
+      <GrpHdr>
+        <MsgId>MSGID-0009</MsgId>
+        <CreDtTm>2025-06-01T10:00:00Z</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>INSTR-0009</InstrId>
+          <EndToEndId>E2E-0009</EndToEndId>
+          <UETR>e2eae8b6-1a2b-4c3d-8e9f-0123456789ab</UETR>
+        </PmtId>
+        <IntrBkSttlmAmt Ccy="EUR">5000.00</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2025-06-01</IntrBkSttlmDt>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>AAAAGB2LXXX</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <Dbtr>
+          <FinInstnId>
+            <BICFI>AAAAGB2LXXX</BICFI>
+          </FinInstnId>
+        </Dbtr>
+        <DbtrAgt>
+          <FinInstnId>
+            <BICFI>AAAAGB2LXXX</BICFI>
+          </FinInstnId>
+        </DbtrAgt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BBBBDEFFXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <FinInstnId>
+            <BICFI>CCCCFRPPXXX</BICFI>
+            <Nm>Gamma Bank SA</Nm>
+            <PstlAdr>
+              <TwnNm>Paris</TwnNm>
+              <Ctry>FR</Ctry>
+            </PstlAdr>
+          </FinInstnId>
+        </Cdtr>
+      </CdtTrfTxInf>
+    </FICdtTrf>
+  </Document>
+</RequestPayload>

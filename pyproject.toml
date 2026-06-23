@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cbpr-usage-rules"
+description = "Validate ISO 20022 CBPR+ XML messages against SWIFT usage (business) rules."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Pete Houghton" }]
+keywords = ["iso20022", "cbpr", "swift", "payments", "validation", "pacs", "pain", "camt"]
+dynamic = ["version"]
+dependencies = ["lxml>=4.9"]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/phoughton/iso20022-cbpr-ur"
+Repository = "https://github.com/phoughton/iso20022-cbpr-ur"
+Issues = "https://github.com/phoughton/iso20022-cbpr-ur/issues"
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "openpyxl>=3.1", "build", "twine"]
+
+[project.scripts]
+cbpr-validate = "cbpr_rules.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.dynamic]
+version = { attr = "cbpr_rules.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+cbpr_rules = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
