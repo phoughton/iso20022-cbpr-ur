@@ -13,7 +13,7 @@ from __future__ import annotations
 import re as _re
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     address_hybrid,
     address_lines_max_length,
@@ -251,21 +251,9 @@ reg("R8", "CBPR_Business_Service_Usage_TextualRule",
     code_in("/AppHdr/BizSvc", ["swift.cbprplus.stp.03"]))
 
 
-reg("VAL-CCY", "CBPR_Valid_Settlement_Currency",
-    "Interbank Settlement Amount currency must be a valid ISO 4217 code.",
-    lambda msg, report: [
-        report(el, detail=f"invalid currency '{ccy}'")
-        for el, ccy in msg.attr_nodes(TX + "/IntrBkSttlmAmt", "Ccy")
-        if ccy and not is_valid_currency(ccy)
-    ])
-
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Instructing/Instructed Agent BICFI must be a structurally valid BIC.",
     each_value_valid(TX + "/InstgAgt/FinInstnId/BICFI", is_valid_bic, "BIC"))
-
-reg("VAL-CTRY", "CBPR_Valid_Country",
-    "Every Postal Address Country must be a valid ISO 3166 country code.",
-    each_value_valid(TX + "/Dbtr/PstlAdr/Ctry", is_valid_country, "country"))
 
 
 # ---------------------------------------------------------------------------

@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- Country (`VAL-CTRY`) and currency (`VAL-CCY`) validation are now single universal
+  rules, like IBAN/LEI. `VAL-CTRY` checks every `<Ctry>` element; `VAL-CCY` checks
+  every `Ccy` attribute and `<Ccy>` element, document-wide, for all message types.
+  This closes gaps where country was unvalidated (e.g. pacs.008 2025, the pacs.009
+  family) and currency was unvalidated (pacs.002 2025), and replaces the ~13
+  per-module `VAL-CTRY` and ~19 per-module `VAL-CCY` rules.
+
 ## [0.1.2]
 
 ### Changed

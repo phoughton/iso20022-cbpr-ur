@@ -11,7 +11,7 @@ rules are surfaced via ``advisory``.
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     business_msg_id_carries_group_id,
     each_value_valid,
@@ -97,22 +97,9 @@ reg("R13", "CBPR_Original_Instruction_Identification_FormalRule",
 # Algorithmic field validation (brief-required VAL-* checks), applied to the
 # fields where these data types appear in camt.054.
 # ---------------------------------------------------------------------------
-reg("VAL-CCY", "CBPR_Valid_Entry_Amount_Currency",
-    "Entry Amount currency must be a valid ISO 4217 code.",
-    lambda msg, report: [
-        report(el, detail=f"invalid currency '{ccy}'")
-        for el, ccy in msg.attr_nodes(ENTRY + "/Amt", "Ccy")
-        if ccy and not is_valid_currency(ccy)
-    ])
-
 reg("VAL-BIC", "CBPR_Valid_Account_Servicer_BIC",
     "Account Servicer BICFI must be a structurally valid BIC.",
     each_value_valid(NTFCTN + "/Acct/Svcr/FinInstnId/BICFI", is_valid_bic, "BIC"))
-
-reg("VAL-CTRY", "CBPR_Valid_Account_Servicer_Country",
-    "Account Servicer postal address Country must be a valid ISO 3166 code.",
-    each_value_valid(NTFCTN + "/Acct/Svcr/FinInstnId/PstlAdr/Ctry",
-                     is_valid_country, "country"))
 
 
 # ---------------------------------------------------------------------------

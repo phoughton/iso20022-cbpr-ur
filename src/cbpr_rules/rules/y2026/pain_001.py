@@ -9,7 +9,7 @@ small helpers, and cross-field / cross-schema logic is written as bespoke
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     business_msg_id_carries_group_id,
     header_msg_def_id_matches,
@@ -182,14 +182,6 @@ _CTRY_PATHS = [
 ]
 
 
-@rule(MT, YEAR, "VAL-CCY", "CBPR_Valid_Instructed_Amount_Currency",
-      "Instructed Amount currency must be a valid ISO 4217 code.")
-def _val_ccy(msg, report):
-    for el, ccy in msg.attr_nodes(TX + "/Amt/InstdAmt", "Ccy"):
-        if ccy and not is_valid_currency(ccy):
-            report(el, detail=f"invalid currency '{ccy}'")
-
-
 @rule(MT, YEAR, "VAL-BIC", "CBPR_Valid_Agent_BIC",
       "Every Financial Institution BICFI must be a structurally valid BIC.")
 def _val_bic(msg, report):
@@ -198,16 +190,6 @@ def _val_bic(msg, report):
             val = msg.text_of(node)
             if val and not is_valid_bic(val):
                 report(node, detail=f"invalid BIC: '{val}'")
-
-
-@rule(MT, YEAR, "VAL-CTRY", "CBPR_Valid_Country",
-      "Every Country code in a Postal Address must be a valid ISO 3166 code.")
-def _val_ctry(msg, report):
-    for path in _CTRY_PATHS:
-        for node in msg.find(path):
-            val = msg.text_of(node)
-            if val and not is_valid_country(val):
-                report(node, detail=f"invalid country: '{val}'")
 
 
 # ---------------------------------------------------------------------------

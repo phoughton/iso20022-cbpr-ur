@@ -11,7 +11,7 @@ rules are surfaced as advisory guidance. Algorithmic field validations
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     amount_equals_sum,
     business_msg_id_carries_group_id,
@@ -115,34 +115,6 @@ def _val_bic(msg, report):
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Every FinInstitution BICFI must be a structurally valid ISO 9362 BIC.",
     _val_bic)
-
-
-def _val_ctry(msg, report):
-    for node in msg.find(RPT + "/Acct/Svcr/FinInstnId/PstlAdr/Ctry"):
-        val = msg.text_of(node)
-        if val and not is_valid_country(val):
-            report(node, detail=f"invalid country '{val}'")
-    for node in msg.find(RPT + "/Acct/Ownr/PstlAdr/Ctry"):
-        val = msg.text_of(node)
-        if val and not is_valid_country(val):
-            report(node, detail=f"invalid country '{val}'")
-
-
-reg("VAL-CTRY", "CBPR_Valid_Country",
-    "Every PostalAddress Country must be a valid ISO 3166 alpha-2 code.",
-    _val_ctry)
-
-
-def _val_ccy(msg, report):
-    for p in (RPT + "/Bal/Amt", RPT + "/Ntry/Amt"):
-        for el, ccy in msg.attr_nodes(p, "Ccy"):
-            if ccy and not is_valid_currency(ccy):
-                report(el, detail=f"invalid currency '{ccy}'")
-
-
-reg("VAL-CCY", "CBPR_Valid_Amount_Currency",
-    "Balance and Entry amount currency must be a valid ISO 4217 code.",
-    _val_ccy)
 
 
 # ---------------------------------------------------------------------------

@@ -8,7 +8,7 @@ mechanizable textual rules are enforced, the rest are surfaced as advisories.
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     business_msg_id_carries_group_id,
     code_in,
@@ -76,21 +76,9 @@ reg("R4", "CBPR_Message_Definition_Identifier_TextualRule",
 # ---------------------------------------------------------------------------
 # Algorithmic field validations (brief), only for fields present in camt.054
 # ---------------------------------------------------------------------------
-reg("VAL-CCY", "CBPR_Valid_Entry_Currency",
-    "Entry Amount currency must be a valid ISO 4217 code.",
-    lambda msg, report: [
-        report(el, detail=f"invalid currency '{ccy}'")
-        for el, ccy in msg.attr_nodes(ENTRY + "/Amt", "Ccy")
-        if ccy and not is_valid_currency(ccy)
-    ])
-
 reg("VAL-BIC", "CBPR_Valid_Account_Servicer_BIC",
     "Account Servicer BICFI must be a structurally valid BIC.",
     each_value_valid(NTFCTN + "/Acct/Svcr/FinInstnId/BICFI", is_valid_bic, "BIC"))
-
-reg("VAL-CTRY", "CBPR_Valid_Account_Owner_Country",
-    "Account Owner postal address Country must be a valid ISO 3166 code.",
-    each_value_valid(NTFCTN + "/Acct/Ownr/PstlAdr/Ctry", is_valid_country, "country"))
 
 
 # ---------------------------------------------------------------------------

@@ -11,7 +11,7 @@ XML paths are the short ISO 20022 tags from its Full_View / XML Path column.
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     address_hybrid,
     address_lines_max_length,
@@ -302,14 +302,6 @@ reg("R44", "CBPR_DEBT_Rule_1_TextualRule",
 
 # Specific validations required by the brief (algorithmic), applied to the
 # fields where these data types appear in pacs.008.
-reg("VAL-CCY", "CBPR_Valid_Settlement_Currency",
-    "Interbank Settlement Amount currency must be a valid ISO 4217 code.",
-    lambda msg, report: [
-        report(el, detail=f"invalid currency '{ccy}'")
-        for el, ccy in msg.attr_nodes(TX + "/IntrBkSttlmAmt", "Ccy")
-        if ccy and not is_valid_currency(ccy)
-    ])
-
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Instructing/Instructed Agent BICFI must be a structurally valid BIC.",
     each_value_valid(TX + "/InstgAgt/FinInstnId/BICFI", is_valid_bic, "BIC"))

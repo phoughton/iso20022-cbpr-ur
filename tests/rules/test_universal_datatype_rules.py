@@ -48,9 +48,30 @@ def test_invalid_lei_flagged_in_any_position_both_years():
         assert found == ["<LEI>BADLEI</LEI>", "<LEI>THIS_IS_NOT_A_LEI</LEI>"], (year, found)
 
 
+# pacs.008 2025 previously had NO country check and only a path-scoped currency
+# check. A bad <Ctry> element and a bad @Ccy attribute must now both be flagged.
+_CTRY_CCY_XML = """<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+ <FIToFICstmrCdtTrf><CdtTrfTxInf>
+  <IntrBkSttlmAmt Ccy="ZZZ">100</IntrBkSttlmAmt>
+  <Dbtr><PstlAdr><Ctry>XX</Ctry></PstlAdr></Dbtr>
+ </CdtTrfTxInf></FIToFICstmrCdtTrf></Document>"""
+
+
+def test_invalid_country_and_currency_flagged():
+    result = c.validate_string(_CTRY_CCY_XML, 2025, "pacs.008")
+    by_rule = {v["rule_number"]: v for v in result["violations"]}
+    assert "pacs.008:VAL-CTRY" in by_rule
+    assert "XX" in by_rule["pacs.008:VAL-CTRY"]["found"]
+    # currency lives on the @Ccy attribute, not element text
+    assert "pacs.008:VAL-CCY" in by_rule
+    assert 'Ccy="ZZZ"' in by_rule["pacs.008:VAL-CCY"]["found"]
+
+
 def test_universal_rules_present_for_every_message_type():
     for year in (2025, 2026):
         for msgtype in c.available(year):
-            numbers = {r["rule_number"] for r in c.list_rules(year, msgtype)}
-            assert f"{msgtype}:VAL-IBAN" in numbers, (year, msgtype)
-            assert f"{msgtype}:VAL-LEI" in numbers, (year, msgtype)
+            numbers = [r["rule_number"] for r in c.list_rules(year, msgtype)]
+            for num in ("VAL-IBAN", "VAL-LEI", "VAL-CTRY", "VAL-CCY"):
+                rule_id = f"{msgtype}:{num}"
+                assert rule_id in numbers, (year, msgtype, num)
+                assert numbers.count(rule_id) == 1, (year, msgtype, num)  # no duplicates

@@ -11,7 +11,7 @@ from __future__ import annotations
 import re
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     bic_presence_exclusive,
     business_msg_id_carries_group_id,
@@ -309,21 +309,9 @@ def _r20(msg, report):
 # ---------------------------------------------------------------------------
 # Algorithmic field validation (VAL-*) - only for fields present in this message
 # ---------------------------------------------------------------------------
-reg("VAL-CCY", "CBPR_Valid_Settlement_Currency",
-    "Interbank Settlement Amount currency must be a valid ISO 4217 code.",
-    lambda msg, report: [
-        report(el, detail=f"invalid currency '{ccy}'")
-        for el, ccy in msg.attr_nodes(TX + "/IntrBkSttlmAmt", "Ccy")
-        if ccy and not is_valid_currency(ccy)
-    ])
-
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Instructing/Instructed Agent BICFI must be a structurally valid BIC.",
     each_value_valid(TX + "/InstgAgt/FinInstnId/BICFI", is_valid_bic, "BIC"))
-
-reg("VAL-CTRY", "CBPR_Valid_Country",
-    "Every PostalAddress Country must be a valid ISO 3166 alpha-2 code.",
-    each_value_valid(TX + "/Dbtr/PstlAdr/Ctry", is_valid_country, "country"))
 
 
 # ---------------------------------------------------------------------------

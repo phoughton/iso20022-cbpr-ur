@@ -10,7 +10,7 @@ from __future__ import annotations
 import re as _re
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     business_msg_id_carries_group_id,
     header_msg_def_id_matches,
@@ -141,15 +141,6 @@ reg("R20", "CBPR_Party_Name_Any_BIC_FormalRule",
 # ---------------------------------------------------------------------------
 # Algorithmic field validation (project brief) - only fields present here.
 # ---------------------------------------------------------------------------
-reg("VAL-CCY", "CBPR_Valid_Original_Interbank_Settlement_Currency",
-    "Original Interbank Settlement Amount currency must be a valid ISO 4217 code.",
-    lambda msg, report: [
-        report(el, detail=f"invalid currency '{ccy}'")
-        for el, ccy in msg.attr_nodes(TX + "/OrgnlTxRef/IntrBkSttlmAmt", "Ccy")
-        if ccy and not is_valid_currency(ccy)
-    ])
-
-
 @rule(MT, YEAR, "VAL-BIC", "CBPR_Valid_Agent_BIC",
       "Every Instructing/Instructed Agent BICFI must be a structurally valid BIC.")
 def _val_bic(msg, report):

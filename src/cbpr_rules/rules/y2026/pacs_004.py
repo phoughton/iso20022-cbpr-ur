@@ -10,7 +10,7 @@ Structure mirrors the reference module ``y2025/pacs_008.py``.
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     bic_presence_exclusive,
     business_msg_id_carries_group_id,
@@ -258,37 +258,11 @@ def _run_all(*checks):
     return check
 
 
-def _valid_ccy(path: str):
-    def check(msg, report):
-        for el, ccy in msg.attr_nodes(path, "Ccy"):
-            if ccy and not is_valid_currency(ccy):
-                report(el, detail=f"invalid currency '{ccy}'")
-    return check
-
-
-reg("VAL-CCY", "CBPR_Valid_Settlement_Currency",
-    "Settlement amount currencies must be valid ISO 4217 codes.",
-    _run_all(
-        _valid_ccy(TX + "/OrgnlIntrBkSttlmAmt"),
-        _valid_ccy(TX + "/RtrdIntrBkSttlmAmt"),
-        _valid_ccy(TX + "/RtrdInstdAmt"),
-        _valid_ccy(OTR + "/IntrBkSttlmAmt"),
-    ))
-
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Instructing/Instructed Agent BICFI must be a structurally valid BIC.",
     _run_all(
         each_value_valid(TX + "/InstgAgt/FinInstnId/BICFI", is_valid_bic, "BIC"),
         each_value_valid(TX + "/InstdAgt/FinInstnId/BICFI", is_valid_bic, "BIC"),
-    ))
-
-reg("VAL-CTRY", "CBPR_Valid_Country",
-    "Every Country code must be a valid ISO 3166 country code.",
-    _run_all(
-        each_value_valid(RC + "/Dbtr/Pty/PstlAdr/Ctry", is_valid_country, "country"),
-        each_value_valid(RC + "/Cdtr/Pty/PstlAdr/Ctry", is_valid_country, "country"),
-        each_value_valid(OTR + "/Dbtr/Pty/PstlAdr/Ctry", is_valid_country, "country"),
-        each_value_valid(OTR + "/Cdtr/Pty/PstlAdr/Ctry", is_valid_country, "country"),
     ))
 
 

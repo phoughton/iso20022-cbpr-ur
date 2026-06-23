@@ -9,7 +9,7 @@ otherwise surfaced as advisories.
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     not_matching_pattern,
     presence_together,
@@ -167,15 +167,6 @@ for _num, _path in _AGENT_NAME_ADR.items():
 # ---------------------------------------------------------------------------
 # Algorithmic field validation (brief), only for fields present in pacs.009 ADV.
 # ---------------------------------------------------------------------------
-reg("VAL-CCY", "CBPR_Valid_Settlement_Currency",
-    "Interbank Settlement Amount currency must be a valid ISO 4217 code.",
-    lambda msg, report: [
-        report(el, detail=f"invalid currency '{ccy}'")
-        for el, ccy in msg.attr_nodes(TX + "/IntrBkSttlmAmt", "Ccy")
-        if ccy and not is_valid_currency(ccy)
-    ])
-
-
 @rule(MT, YEAR, "VAL-BIC", "CBPR_Valid_Agent_BIC",
       "Every Agent BICFI in the message must be a structurally valid BIC.")
 def _val_bic(msg, report):

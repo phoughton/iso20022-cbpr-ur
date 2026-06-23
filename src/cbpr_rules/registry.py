@@ -11,7 +11,7 @@ import pkgutil
 from typing import Callable, Dict, List, Tuple
 
 from .models import Rule, Severity, Violation
-from .validators import is_valid_iban, is_valid_lei
+from .validators import is_valid_country, is_valid_currency, is_valid_iban, is_valid_lei
 
 # (year, message_type) -> list[Rule]
 _REGISTRY: Dict[Tuple[int, str], List[Rule]] = {}
@@ -99,24 +99,32 @@ def _discover(year: int) -> None:
 
 
 # Cross-cutting datatype validations applied to every message type. In ISO 20022
-# these elements are self-validating datatypes wherever they appear, so a single
+# these are self-validating datatypes wherever they appear, so a single
 # document-wide scan covers all message types (and all party positions - Debtor,
 # Creditor, Agent, Intermediary) correctly:
 #   <IBAN> is IBAN2007Identifier (ISO 7064 mod-97);
-#   <LEI>  is LEIIdentifier (ISO 17442, 18 alphanumerics + 2 ISO 7064 check digits).
+#   <LEI>  is LEIIdentifier (ISO 17442, 18 alphanumerics + 2 ISO 7064 check digits);
+#   <Ctry> is CountryCode (ISO 3166-1 alpha-2).
 # (number, element, validator, name, description)
-_UNIVERSAL = [
+_UNIVERSAL_ELEMENT = [
     ("VAL-IBAN", "IBAN", is_valid_iban, "CBPR_Valid_IBAN",
      "Every IBAN must be structurally valid and pass the ISO 7064 mod-97 check."),
     ("VAL-LEI", "LEI", is_valid_lei, "CBPR_Valid_LEI",
      "Every LEI must be a structurally valid ISO 17442 identifier with correct check digits."),
+    ("VAL-CTRY", "Ctry", is_valid_country, "CBPR_Valid_Country",
+     "Every Country must be a valid ISO 3166-1 alpha-2 country code."),
 ]
+
+# Currency is carried as the ``Ccy`` XML attribute on amount elements
+# (ActiveCurrencyAndAmount etc.) and occasionally as a ``<Ccy>`` element (account
+# currency). Both must be a valid ISO 4217 code.
+_CCY_DESC = "Every currency must be a valid ISO 4217 currency code."
 
 
 def _universal_rules(msgtype: str) -> List[Rule]:
-    """Build the cross-cutting datatype rules (IBAN, LEI) for a message type."""
+    """Build the cross-cutting datatype rules (IBAN, LEI, country, currency)."""
     rules: List[Rule] = []
-    for number, element, validator, name, description in _UNIVERSAL:
+    for number, element, validator, name, description in _UNIVERSAL_ELEMENT:
         rule_id = f"{msgtype}:{number}"
 
         def check(msg, _el=element, _val=validator, _id=rule_id, _name=name, _desc=description):
@@ -138,7 +146,48 @@ def _universal_rules(msgtype: str) -> List[Rule]:
             return out
 
         rules.append(Rule(rule_id, name, description, Severity.VIOLATION, check))
+
+    rules.append(_currency_rule(msgtype))
     return rules
+
+
+def _currency_rule(msgtype: str) -> Rule:
+    rule_id = f"{msgtype}:VAL-CCY"
+
+    def check(msg) -> List[Violation]:
+        out: List[Violation] = []
+
+        def flag(el, code):
+            out.append(
+                Violation(
+                    rule_number=rule_id,
+                    name="CBPR_Valid_Currency",
+                    description=_CCY_DESC,
+                    detail=f"invalid currency '{code}'",
+                    found=msg.snippet_of(el),
+                    xpath=msg.xpath_of(el),
+                    line=msg.line_of(el),
+                )
+            )
+
+        # Every ``Ccy`` attribute, anywhere in the message.
+        for root in (msg.bah, msg.document):
+            if root is None:
+                continue
+            for el in root.iter():
+                if not isinstance(el.tag, str):
+                    continue
+                code = el.get("Ccy")
+                if code and not is_valid_currency(code):
+                    flag(el, code)
+        # Standalone ``<Ccy>`` elements (e.g. account currency).
+        for el in msg.iter_local("Ccy"):
+            code = msg.text_of(el)
+            if code and not is_valid_currency(code):
+                flag(el, code)
+        return out
+
+    return Rule(rule_id, "CBPR_Valid_Currency", _CCY_DESC, Severity.VIOLATION, check)
 
 
 def load_rules(year: int, msgtype: str) -> List[Rule]:

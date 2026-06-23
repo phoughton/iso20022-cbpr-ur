@@ -12,7 +12,7 @@ Paths are the short ISO 20022 tags from the guideline's XML Path column.
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country
+from ...validators import is_valid_bic
 from ...helpers import (
     address_hybrid,
     address_lines_max_length,
@@ -171,10 +171,6 @@ reg("R24", "CBPR_Duplication_Postal_Address_TextualRule",
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Instructing/Instructed Agent BICFI must be a structurally valid BIC.",
     each_value_valid(TX + "/InstgAgt/FinInstnId/BICFI", is_valid_bic, "BIC"))
-
-reg("VAL-CTRY", "CBPR_Valid_Originator_Country",
-    "Originator Postal Address Country must be a valid ISO 3166 country code.",
-    each_value_valid(ORGTR + "/PstlAdr/Ctry", is_valid_country, "country"))
 
 
 # ---------------------------------------------------------------------------

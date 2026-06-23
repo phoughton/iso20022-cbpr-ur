@@ -9,7 +9,7 @@ module (``pacs_008``): combinator-built rules go through ``reg``/``_agent_block`
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency
+from ...validators import is_valid_bic
 from ...helpers import (
     address_hybrid,
     address_lines_max_length,
@@ -141,14 +141,6 @@ reg("R69", "CBPR_Structured_Remittance_Information_TextualRule",
 # ---------------------------------------------------------------------------
 # Algorithmic field validation (brief), only for fields present in pain.001.
 # ---------------------------------------------------------------------------
-reg("VAL-CCY", "CBPR_Valid_Instructed_Amount_Currency",
-    "Instructed Amount currency must be a valid ISO 4217 code.",
-    lambda msg, report: [
-        report(el, detail=f"invalid currency '{ccy}'")
-        for el, ccy in msg.attr_nodes(TX + "/Amt/InstdAmt", "Ccy")
-        if ccy and not is_valid_currency(ccy)
-    ])
-
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Every Financial Institution BICFI must be a structurally valid BIC.",
     lambda msg, report: [
@@ -162,23 +154,6 @@ reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
         )
         for node in msg.find(path)
         if msg.text_of(node) and not is_valid_bic(msg.text_of(node))
-    ])
-
-reg("VAL-CTRY", "CBPR_Valid_Country",
-    "Every Country must be a valid ISO 3166-1 alpha-2 code.",
-    lambda msg, report: [
-        report(node, detail=f"invalid country '{msg.text_of(node)}'")
-        for path in (
-            PMTINF + "/Dbtr/PstlAdr/Ctry",
-            PMTINF + "/DbtrAgt/FinInstnId/PstlAdr/Ctry",
-            TX + "/Cdtr/PstlAdr/Ctry",
-            TX + "/CdtrAgt/FinInstnId/PstlAdr/Ctry",
-            TX + "/IntrmyAgt1/FinInstnId/PstlAdr/Ctry",
-            TX + "/IntrmyAgt2/FinInstnId/PstlAdr/Ctry",
-            TX + "/IntrmyAgt3/FinInstnId/PstlAdr/Ctry",
-        )
-        for node in msg.find(path)
-        if msg.text_of(node) and not is_valid_country(msg.text_of(node))
     ])
 
 
