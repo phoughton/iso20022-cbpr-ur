@@ -11,6 +11,7 @@ import pkgutil
 from typing import Callable, Dict, List, Tuple
 
 from .models import Rule, Severity, Violation
+from .validators import is_valid_iban
 
 # (year, message_type) -> list[Rule]
 _REGISTRY: Dict[Tuple[int, str], List[Rule]] = {}
@@ -97,9 +98,45 @@ def _discover(year: int) -> None:
     _LOADED.add(year)
 
 
+_IBAN_DESC = "Every IBAN must be structurally valid and pass the ISO 7064 mod-97 check."
+
+
+def _universal_rules(msgtype: str) -> List[Rule]:
+    """Cross-cutting value validations applied to every message type.
+
+    In ISO 20022 the ``<IBAN>`` element is always the self-validating
+    ``IBAN2007Identifier`` datatype, so any IBAN anywhere in a message - Debtor,
+    Creditor, Agent or Intermediary account - must pass the mod-97 check. A
+    single document-wide scan therefore covers all message types correctly.
+    """
+    rule_id = f"{msgtype}:VAL-IBAN"
+
+    def check(msg) -> List[Violation]:
+        out: List[Violation] = []
+        for el in msg.iter_local("IBAN"):
+            val = msg.text_of(el)
+            if val and not is_valid_iban(val):
+                out.append(
+                    Violation(
+                        rule_number=rule_id,
+                        name="CBPR_Valid_IBAN",
+                        description=_IBAN_DESC,
+                        detail=f"invalid IBAN: '{val}'",
+                        found=msg.snippet_of(el),
+                        xpath=msg.xpath_of(el),
+                        line=msg.line_of(el),
+                    )
+                )
+        return out
+
+    return [Rule(rule_id, "CBPR_Valid_IBAN", _IBAN_DESC, Severity.VIOLATION, check)]
+
+
 def load_rules(year: int, msgtype: str) -> List[Rule]:
     _discover(int(year))
-    return list(_REGISTRY.get(_key(year, msgtype), []))
+    rules = list(_REGISTRY.get(_key(year, msgtype), []))
+    rules.extend(_universal_rules(msgtype))
+    return rules
 
 
 def available_message_types(year: int) -> List[str]:

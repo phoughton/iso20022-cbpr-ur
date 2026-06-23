@@ -86,7 +86,7 @@ Both `validate_file` and `validate_string` return a dictionary:
   "message_type": "pacs.008",         # the rule set that was applied
   "detected_message_type": "pacs.008",# auto-detected from the Document namespace
   "year": 2025,
-  "rules_evaluated": 84,
+  "rules_evaluated": 85,
   "violations": [
     {
       "rule_number": "pacs.008:R41",   # unique within the message type
