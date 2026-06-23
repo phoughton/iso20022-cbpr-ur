@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- LEI validation is now a single universal `VAL-LEI` rule (every `<LEI>` element,
+  all message types), replacing the per-module `VAL-LEI` checks that were missing
+  for several message types (e.g. pacs.008 2025) and scoped to specific party
+  paths where present. Malformed LEIs in any party position are now caught
+  consistently. `VAL-IBAN` and `VAL-LEI` share one document-wide implementation.
+
 ## [0.1.1]
 
 ### Fixed

@@ -11,7 +11,7 @@ Name/PostalAddress follow the *agent* (present-together) rule via FinInstnId.
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency, is_valid_lei
+from ...validators import is_valid_bic, is_valid_country, is_valid_currency
 from ...helpers import (
     address_hybrid,
     address_lines_max_length,
@@ -210,10 +210,6 @@ reg("VAL-CCY", "CBPR_Valid_Settlement_Currency",
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Instructing/Instructed Agent BICFI must be a structurally valid BIC.",
     each_value_valid(TX + "/InstgAgt/FinInstnId/BICFI", is_valid_bic, "BIC"))
-
-reg("VAL-LEI", "CBPR_Valid_Agent_LEI",
-    "Every Financial Institution LEI must be a structurally valid LEI.",
-    each_value_valid(TX + "/DbtrAgt/FinInstnId/LEI", is_valid_lei, "LEI"))
 
 reg("VAL-CTRY", "CBPR_Valid_Postal_Country",
     "Every Postal Address Country must be a valid ISO 3166 country code.",

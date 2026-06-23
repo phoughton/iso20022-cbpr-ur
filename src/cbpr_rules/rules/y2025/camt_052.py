@@ -11,7 +11,7 @@ rules are surfaced as advisory guidance. Algorithmic field validations
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency, is_valid_lei
+from ...validators import is_valid_bic, is_valid_country, is_valid_currency
 from ...helpers import (
     amount_equals_sum,
     business_msg_id_carries_group_id,
@@ -115,11 +115,6 @@ def _val_bic(msg, report):
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Every FinInstitution BICFI must be a structurally valid ISO 9362 BIC.",
     _val_bic)
-
-
-reg("VAL-LEI", "CBPR_Valid_LEI",
-    "Account Owner / Account Servicer LEI must be a structurally valid ISO 17442 LEI.",
-    each_value_valid(RPT + "/Acct/Svcr/FinInstnId/LEI", is_valid_lei, "LEI"))
 
 
 def _val_ctry(msg, report):

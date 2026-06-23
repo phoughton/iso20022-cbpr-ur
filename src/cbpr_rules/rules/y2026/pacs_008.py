@@ -9,7 +9,7 @@ registered as advisories.
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency, is_valid_lei
+from ...validators import is_valid_bic, is_valid_country, is_valid_currency
 from ...helpers import (
     bic_presence_exclusive,
     business_msg_id_carries_group_id,
@@ -318,10 +318,6 @@ reg("VAL-CCY", "CBPR_Valid_Settlement_Currency",
 reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
     "Every BICFI in the message must be a structurally valid BIC.",
     each_value_valid(TX + "/InstgAgt/FinInstnId/BICFI", is_valid_bic, "BIC"))
-
-reg("VAL-LEI", "CBPR_Valid_LEI",
-    "Every LEI in the message must be a structurally valid LEI.",
-    each_value_valid(TX + "/Dbtr/Id/OrgId/LEI", is_valid_lei, "LEI"))
 
 reg("VAL-CTRY", "CBPR_Valid_Country",
     "Every Country code must be a valid ISO 3166 code.",

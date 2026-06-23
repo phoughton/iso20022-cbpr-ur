@@ -9,7 +9,7 @@ module (``pacs_008``): combinator-built rules go through ``reg``/``_agent_block`
 from __future__ import annotations
 
 from ...registry import advisory, rule
-from ...validators import is_valid_bic, is_valid_country, is_valid_currency, is_valid_lei
+from ...validators import is_valid_bic, is_valid_country, is_valid_currency
 from ...helpers import (
     address_hybrid,
     address_lines_max_length,
@@ -162,20 +162,6 @@ reg("VAL-BIC", "CBPR_Valid_Agent_BIC",
         )
         for node in msg.find(path)
         if msg.text_of(node) and not is_valid_bic(msg.text_of(node))
-    ])
-
-reg("VAL-LEI", "CBPR_Valid_LEI",
-    "Every LEI must be a structurally valid ISO 17442 LEI.",
-    lambda msg, report: [
-        report(node, detail=f"invalid LEI: '{msg.text_of(node)}'")
-        for path in (
-            PMTINF + "/Dbtr/Id/OrgId/LEI",
-            PMTINF + "/DbtrAgt/FinInstnId/LEI",
-            TX + "/Cdtr/Id/OrgId/LEI",
-            TX + "/CdtrAgt/FinInstnId/LEI",
-        )
-        for node in msg.find(path)
-        if msg.text_of(node) and not is_valid_lei(msg.text_of(node))
     ])
 
 reg("VAL-CTRY", "CBPR_Valid_Country",

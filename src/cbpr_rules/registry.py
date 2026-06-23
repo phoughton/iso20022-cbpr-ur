@@ -11,7 +11,7 @@ import pkgutil
 from typing import Callable, Dict, List, Tuple
 
 from .models import Rule, Severity, Violation
-from .validators import is_valid_iban
+from .validators import is_valid_iban, is_valid_lei
 
 # (year, message_type) -> list[Rule]
 _REGISTRY: Dict[Tuple[int, str], List[Rule]] = {}
@@ -98,38 +98,47 @@ def _discover(year: int) -> None:
     _LOADED.add(year)
 
 
-_IBAN_DESC = "Every IBAN must be structurally valid and pass the ISO 7064 mod-97 check."
+# Cross-cutting datatype validations applied to every message type. In ISO 20022
+# these elements are self-validating datatypes wherever they appear, so a single
+# document-wide scan covers all message types (and all party positions - Debtor,
+# Creditor, Agent, Intermediary) correctly:
+#   <IBAN> is IBAN2007Identifier (ISO 7064 mod-97);
+#   <LEI>  is LEIIdentifier (ISO 17442, 18 alphanumerics + 2 ISO 7064 check digits).
+# (number, element, validator, name, description)
+_UNIVERSAL = [
+    ("VAL-IBAN", "IBAN", is_valid_iban, "CBPR_Valid_IBAN",
+     "Every IBAN must be structurally valid and pass the ISO 7064 mod-97 check."),
+    ("VAL-LEI", "LEI", is_valid_lei, "CBPR_Valid_LEI",
+     "Every LEI must be a structurally valid ISO 17442 identifier with correct check digits."),
+]
 
 
 def _universal_rules(msgtype: str) -> List[Rule]:
-    """Cross-cutting value validations applied to every message type.
+    """Build the cross-cutting datatype rules (IBAN, LEI) for a message type."""
+    rules: List[Rule] = []
+    for number, element, validator, name, description in _UNIVERSAL:
+        rule_id = f"{msgtype}:{number}"
 
-    In ISO 20022 the ``<IBAN>`` element is always the self-validating
-    ``IBAN2007Identifier`` datatype, so any IBAN anywhere in a message - Debtor,
-    Creditor, Agent or Intermediary account - must pass the mod-97 check. A
-    single document-wide scan therefore covers all message types correctly.
-    """
-    rule_id = f"{msgtype}:VAL-IBAN"
-
-    def check(msg) -> List[Violation]:
-        out: List[Violation] = []
-        for el in msg.iter_local("IBAN"):
-            val = msg.text_of(el)
-            if val and not is_valid_iban(val):
-                out.append(
-                    Violation(
-                        rule_number=rule_id,
-                        name="CBPR_Valid_IBAN",
-                        description=_IBAN_DESC,
-                        detail=f"invalid IBAN: '{val}'",
-                        found=msg.snippet_of(el),
-                        xpath=msg.xpath_of(el),
-                        line=msg.line_of(el),
+        def check(msg, _el=element, _val=validator, _id=rule_id, _name=name, _desc=description):
+            out: List[Violation] = []
+            for el in msg.iter_local(_el):
+                value = msg.text_of(el)
+                if value and not _val(value):
+                    out.append(
+                        Violation(
+                            rule_number=_id,
+                            name=_name,
+                            description=_desc,
+                            detail=f"invalid {_el}: '{value}'",
+                            found=msg.snippet_of(el),
+                            xpath=msg.xpath_of(el),
+                            line=msg.line_of(el),
+                        )
                     )
-                )
-        return out
+            return out
 
-    return [Rule(rule_id, "CBPR_Valid_IBAN", _IBAN_DESC, Severity.VIOLATION, check)]
+        rules.append(Rule(rule_id, name, description, Severity.VIOLATION, check))
+    return rules
 
 
 def load_rules(year: int, msgtype: str) -> List[Rule]:
