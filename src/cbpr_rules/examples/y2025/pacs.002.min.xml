@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Envelope>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <OrgId/>
+    </Fr>
+    <To>
+      <OrgId/>
+    </To>
+    <BizMsgIdr>EXMsgId</BizMsgIdr>
+    <MsgDefIdr>pacs.002.001.10</MsgDefIdr>
+    <CreDt>2026-01-01T10:00:00+00:00</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10">
+    <FIToFIPmtStsRpt>
+      <GrpHdr>
+        <MsgId>EXMsgId</MsgId>
+        <CreDtTm>2026-01-01T10:00:00+00:00</CreDtTm>
+      </GrpHdr>
+      <TxInfAndSts>
+        <OrgnlGrpInf>
+          <OrgnlMsgId>EXOrgnlMsgId</OrgnlMsgId>
+          <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+        </OrgnlGrpInf>
+        <OrgnlEndToEndId>EXOrgnlEndToEndId</OrgnlEndToEndId>
+        <OrgnlUETR>11111111-1111-4111-8111-111111111111</OrgnlUETR>
+        <TxSts>EXTx</TxSts>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>EXMPGB2LXXX</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>EXMPUS33XXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+      </TxInfAndSts>
+    </FIToFIPmtStsRpt>
+  </Document>
+</Envelope>

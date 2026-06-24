@@ -1,13 +1,18 @@
 """Validation engine and public API."""
 from __future__ import annotations
 
+from importlib import resources
 from typing import List, Optional
+
+from lxml import etree
 
 from . import loader
 from . import schema as _schema
 from .message import ParsedMessage
 from .models import Rule, Severity
 from .registry import available_message_types, load_rules
+
+_VARIANTS = ("min", "max")
 
 
 class ValidationError(Exception):
@@ -98,3 +103,46 @@ def list_rules(year: int, msgtype: str) -> List[dict]:
 def available(year: int) -> List[str]:
     """Message types with rules available for a given year."""
     return available_message_types(year)
+
+
+def _example_resource(year: int, msgtype: str, variant: str):
+    return (
+        resources.files("cbpr_rules")
+        .joinpath("examples", f"y{int(year)}", f"{msgtype}.{variant}.xml")
+    )
+
+
+def example_variants(year: int, msgtype: str) -> List[str]:
+    """Which example variants ('min'/'max') are bundled for a (year, message type)."""
+    return [v for v in _VARIANTS if _example_resource(year, msgtype, v).is_file()]
+
+
+def example_message(
+    year: int, msgtype: str, variant: str = "max", wrapper: str = "Envelope"
+) -> str:
+    """Return a bundled, pre-verified example message for a (year, message type).
+
+    ``variant`` is 'min' (mandatory fields only) or 'max' (every field populated).
+    Both are guaranteed to pass the usage rules (and the CBPR+ XSDs). ``wrapper``
+    overrides the single root element tag (default ``Envelope``) that holds the
+    ``AppHdr`` and ``Document``. Raises ``ValidationError`` if no such example.
+    """
+    if variant not in _VARIANTS:
+        raise ValidationError(
+            f"Unknown variant '{variant}'; choose one of {', '.join(_VARIANTS)}."
+        )
+    res = _example_resource(year, msgtype, variant)
+    if not res.is_file():
+        types = ", ".join(available(year)) or "(none)"
+        raise ValidationError(
+            f"No {variant} example for '{msgtype}' in {int(year)}. "
+            f"Available message types: {types}."
+        )
+    text = res.read_text(encoding="utf-8")
+    if wrapper and wrapper != "Envelope":
+        root = etree.fromstring(text.encode("utf-8"))
+        root.tag = wrapper
+        text = etree.tostring(
+            root, xml_declaration=True, encoding="UTF-8", pretty_print=True
+        ).decode("utf-8")
+    return text

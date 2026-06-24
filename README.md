@@ -93,6 +93,35 @@ Advisory rules are summarised as a count by default; pass `--advisory` to list t
 
 ---
 
+## Example messages
+
+For every supported message type the package bundles a **minimum** and a
+**maximum** example message — both pre-verified to pass the usage rules *and* the
+CBPR+ XSDs:
+
+- **min** — only the mandatory fields (smallest valid message);
+- **max** — every XSD-visible field populated (one representative occurrence; the
+  richest single legal combination, since some fields are mutually exclusive).
+
+```bash
+# Print to stdout (full AppHdr + Document, wrapped in <Envelope>)
+cbpr-validate --example max --year 2025 --type pacs.008
+cbpr-validate --example min --year 2026 --type pacs.009_cov > template.xml
+
+# Override the wrapper tag (default: Envelope)
+cbpr-validate --example max --year 2025 --type pacs.008 --wrapper BusinessMessage
+```
+```python
+import cbpr_rules
+xml = cbpr_rules.example_message(2025, "pacs.008", "max")   # variant defaults to "max"
+cbpr_rules.example_variants(2025, "pacs.008")               # ['min', 'max']
+```
+
+The data is **fictitious** (synthetic BICs/IBANs/LEIs, `EXAMPLE` names) and does
+not reproduce any real sample — use them as starting templates, not real payments.
+
+---
+
 ## The result object
 
 Both `validate_file` and `validate_string` return a dictionary:

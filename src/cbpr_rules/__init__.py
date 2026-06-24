@@ -7,7 +7,14 @@ from __future__ import annotations
 __version__ = "0.2.0"
 
 from .models import Rule, Severity, Violation
-from .engine import validate_file, validate_string, list_rules, available
+from .engine import (
+    validate_file,
+    validate_string,
+    list_rules,
+    available,
+    example_message,
+    example_variants,
+)
 
 __all__ = [
     "__version__",
@@ -18,4 +25,6 @@ __all__ = [
     "validate_string",
     "list_rules",
     "available",
+    "example_message",
+    "example_variants",
 ]

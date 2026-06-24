@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Envelope>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <OrgId/>
+    </Fr>
+    <To>
+      <OrgId/>
+    </To>
+    <BizMsgIdr>EXMsgId</BizMsgIdr>
+    <MsgDefIdr>camt.052.001.08</MsgDefIdr>
+    <CreDt>2026-01-01T10:00:00+00:00</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.08">
+    <BkToCstmrAcctRpt>
+      <GrpHdr>
+        <MsgId>EXMsgId</MsgId>
+        <CreDtTm>2026-01-01T10:00:00+00:00</CreDtTm>
+      </GrpHdr>
+      <Rpt>
+        <Id>EXId</Id>
+        <ElctrncSeqNb>1000.00</ElctrncSeqNb>
+        <Acct>
+          <Id>
+            <IBAN>GB82WEST12345698765432</IBAN>
+          </Id>
+        </Acct>
+      </Rpt>
+    </BkToCstmrAcctRpt>
+  </Document>
+</Envelope>

@@ -9,7 +9,14 @@ import textwrap
 from typing import List, Optional
 
 from . import __version__
-from .engine import ValidationError, available, list_rules, validate_file, validate_string
+from .engine import (
+    ValidationError,
+    available,
+    example_message,
+    list_rules,
+    validate_file,
+    validate_string,
+)
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -50,6 +57,20 @@ def _build_parser() -> argparse.ArgumentParser:
         "--advisory",
         action="store_true",
         help="Also list the advisory (non-enforced) rules in full.",
+    )
+    p.add_argument(
+        "--example",
+        choices=("min", "max"),
+        help="Print a bundled example message for --year/--type instead of validating: "
+        "min (mandatory fields only) or max (every field populated). Both are XSD- and "
+        "usage-rule-valid.",
+    )
+    p.add_argument(
+        "--wrapper",
+        default="Envelope",
+        metavar="TAG",
+        help="Root element tag wrapping the AppHdr+Document in --example output "
+        "(default: Envelope).",
     )
     p.add_argument(
         "--list",
@@ -182,6 +203,17 @@ def main(argv: Optional[List[str]] = None) -> int:
             return 2
         types = available(args.year)
         print(json.dumps(types) if args.json else "\n".join(types))
+        return 0
+
+    if args.example:
+        if args.year is None or args.msgtype is None:
+            print("error: --example requires --year and --type", file=sys.stderr)
+            return 2
+        try:
+            print(example_message(args.year, args.msgtype, args.example, wrapper=args.wrapper))
+        except ValidationError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
         return 0
 
     if args.list:

@@ -109,6 +109,27 @@ def test_cli_format_json_alias_matches_json_flag(capsys):
     assert json.loads(via_format)["message_type"] == "pacs.008"
 
 
+def test_cli_example_prints_valid_xml(capsys):
+    rc = cli.main(["--example", "max", "--year", "2025", "--type", "pacs.008"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "<Envelope>" in out and "FIToFICstmrCdtTrf" in out
+
+
+def test_cli_example_requires_type(capsys):
+    rc = cli.main(["--example", "max", "--year", "2025"])
+    assert rc == 2
+
+
+def test_cli_example_wrapper_override(capsys):
+    rc = cli.main(
+        ["--example", "min", "--year", "2025", "--type", "pacs.008", "--wrapper", "BusinessMessage"]
+    )
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "<BusinessMessage>" in out
+
+
 def test_cli_xsd_json_includes_block(capsys):
     rc = cli.main(
         ["tests/fixtures/mini_valid.xml", "--year", "2025", "--xsd", "tests/fixtures/mini.xsd",

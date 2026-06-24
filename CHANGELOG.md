@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Bundled **example messages**: a minimum and a maximum variant for every
+  supported message type, each pre-verified to pass the usage rules and the
+  CBPR+ XSDs. New API `example_message(year, msgtype, variant="max",
+  wrapper="Envelope")` and `example_variants(year, msgtype)`, and CLI
+  `--example {min,max}` (with `--wrapper TAG`). Data is fictitious/anonymised.
+
 ## [0.2.0]
 
 ### Added
