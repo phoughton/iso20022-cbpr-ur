@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- `--format {text,compact,json}` CLI option. The new `compact` format prints one
+  finding per line, compiler/linter-style (`file:line: severity [rule] message | at
+  xpath`) with a stable `VALID:`/`INVALID:` summary line — easy for tools and coding
+  agents to parse. `--json` is now an alias for `--format json`; the default rich
+  text output is unchanged.
+
 ## [0.1.3]
 
 ### Changed

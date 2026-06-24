@@ -26,7 +26,18 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Message type override, e.g. pacs.008 or pacs.008_stp "
         "(auto-detected from the Document namespace if omitted).",
     )
-    p.add_argument("--json", action="store_true", help="Emit JSON instead of text.")
+    p.add_argument(
+        "--format",
+        choices=("text", "compact", "json"),
+        default="text",
+        help="Output format: text (rich, default), compact (one finding per line, "
+        "compiler-style — for tools/agents), or json (full machine-readable).",
+    )
+    p.add_argument(
+        "--json",
+        action="store_true",
+        help="Alias for --format json.",
+    )
     p.add_argument(
         "--xsd",
         action="append",
@@ -125,6 +136,43 @@ def _format_text(result: dict, show_advisory: bool = False) -> str:
     return "\n".join(lines)
 
 
+def _format_compact(result: dict, source: str) -> str:
+    """One finding per line, compiler/linter-style, for tools and coding agents.
+
+    ``<source>:<line>: <severity> [<rule>] <message> | at <xpath>`` per violation,
+    followed by a single greppable ``VALID:``/``INVALID:`` summary line. Advisory
+    (non-enforced) rules are omitted; use --json or text --advisory for those.
+    """
+    lines: List[str] = []
+    for v in result["violations"]:
+        line = v["line"] if v["line"] is not None else "?"
+        message = " ".join((v.get("detail") or v["description"] or "").split())
+        suffix = f" | at {v['xpath']}" if v.get("xpath") else ""
+        lines.append(f"{source}:{line}: {v['severity']} [{v['rule_number']}] {message}{suffix}")
+
+    xsd = result.get("xsd")
+    schema_errors = 0
+    if xsd is not None:
+        for s in xsd["schemas"]:
+            if s.get("load_error"):
+                schema_errors += 1
+                lines.append(f"{s['file']}: schema-error could not load schema: {s['load_error']}")
+            for e in s["errors"]:
+                schema_errors += 1
+                eline = e["line"] if e.get("line") is not None else "?"
+                msg = " ".join((e.get("message") or "").split())
+                lines.append(f"{s['file']}:{eline}: schema-error {msg}")
+
+    n = len(result["violations"])
+    verdict = "VALID" if result["valid"] else "INVALID"
+    parts = [f"{n} violation{'s' if n != 1 else ''}"]
+    if xsd is not None:
+        parts.append(f"{schema_errors} schema error{'s' if schema_errors != 1 else ''}")
+    summary = f"{verdict}: {', '.join(parts)} ({result['rules_evaluated']} rules)"
+    lines.append(summary)
+    return "\n".join(lines)
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     args = _build_parser().parse_args(argv)
 
@@ -153,6 +201,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         print("error: --year is required to validate", file=sys.stderr)
         return 2
 
+    source = args.file or "<stdin>"
     try:
         if args.file:
             result = validate_file(args.file, args.year, args.msgtype, xsd=args.xsd)
@@ -163,8 +212,11 @@ def main(argv: Optional[List[str]] = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 
-    if args.json:
+    fmt = "json" if args.json else args.format
+    if fmt == "json":
         print(json.dumps(result, indent=2))
+    elif fmt == "compact":
+        print(_format_compact(result, source))
     else:
         print(_format_text(result, show_advisory=args.advisory))
 

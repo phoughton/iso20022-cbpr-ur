@@ -57,8 +57,11 @@ result = cbpr_rules.validate_string(xml_text, year=2026)
 # Human-readable (default). Exit code is non-zero if there are violations.
 cbpr-validate payment.xml --year 2025
 
-# JSON output
-cbpr-validate payment.xml --year 2025 --json
+# Compact, one finding per line (compiler-style) — for tools and coding agents
+cbpr-validate payment.xml --year 2025 --format compact
+
+# JSON output (full machine-readable result)
+cbpr-validate payment.xml --year 2025 --json   # same as --format json
 
 # Read from stdin
 cat payment.xml | cbpr-validate --year 2026
@@ -72,6 +75,20 @@ cbpr-validate payment.xml --year 2025 --xsd pacs.008.001.08.xsd
 
 Each reported violation shows the rule, **why** this instance failed (`Problem:`),
 the **offending XML** from your file (`Found:`), and its line + xpath (`At:`).
+
+**For tools and coding agents**, prefer `--format compact` (one finding per line,
+parseable like a compiler/linter) or `--json` (the full structured result):
+
+```text
+$ cbpr-validate payment.xml --year 2025 --format compact
+payment.xml:7: violation [pacs.008:R2] From vs Instructing Agent: ABCDGB2LXXX != GGGGGB2LXXX | at /AppHdr/Fr/FIId/FinInstnId/BICFI
+payment.xml:63: violation [pacs.008:VAL-IBAN] invalid IBAN: 'GB29NWBK60161331926818' | at /Document/.../DbtrAcct/Id/IBAN
+INVALID: 5 violations (87 rules)
+```
+
+Each line is `file:line: severity [rule] message | at xpath`, and the final
+`VALID:` / `INVALID:` line is a stable summary to grep for. With `--xsd`, schema
+errors appear as `schema-error` lines and are counted in the summary.
 Advisory rules are summarised as a count by default; pass `--advisory` to list them.
 
 ---
