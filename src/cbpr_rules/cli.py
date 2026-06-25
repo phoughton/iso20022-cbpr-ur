@@ -78,6 +78,12 @@ def _build_parser() -> argparse.ArgumentParser:
         help="List the rules for --year/--type instead of validating.",
     )
     p.add_argument(
+        "--enforced",
+        action="store_true",
+        help="List only the enforceable (mechanically-checked) rules for --year/--type; "
+        "advisory rules are omitted. Implies --list.",
+    )
+    p.add_argument(
         "--list-types", action="store_true", help="List message types available for --year."
     )
     p.add_argument("--version", action="version", version=f"cbpr-validate {__version__}")
@@ -216,11 +222,11 @@ def main(argv: Optional[List[str]] = None) -> int:
             return 2
         return 0
 
-    if args.list:
+    if args.list or args.enforced:
         if args.year is None or args.msgtype is None:
             print("error: --year and --type are required for --list", file=sys.stderr)
             return 2
-        rules = list_rules(args.year, args.msgtype)
+        rules = list_rules(args.year, args.msgtype, enforced_only=args.enforced)
         if args.json:
             print(json.dumps(rules, indent=2))
         else:

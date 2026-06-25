@@ -203,11 +203,13 @@ matching is by local name, so namespace prefixes never matter.
 ```python
 cbpr_rules.available(2025)              # -> ['camt.052', 'pacs.008', ...]
 cbpr_rules.list_rules(2025, "pacs.008") # -> [{rule_number, name, description, severity, enforced}, ...]
+cbpr_rules.list_rules(2025, "pacs.008", enforced_only=True)  # only the enforceable rules
 ```
 
 ```bash
 cbpr-validate --year 2025 --list-types
-cbpr-validate --year 2025 --type pacs.008 --list
+cbpr-validate --year 2025 --type pacs.008 --list               # all rules
+cbpr-validate --year 2025 --type pacs.008 --enforced           # enforceable rules only
 ```
 
 ### Algorithmic field validation

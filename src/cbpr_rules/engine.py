@@ -95,9 +95,16 @@ def validate_string(xml: str, year: int, msgtype: Optional[str] = None, xsd=None
     return _validate_tree(tree, year, msgtype, xsd)
 
 
-def list_rules(year: int, msgtype: str) -> List[dict]:
-    """Return metadata for every rule registered for a (year, message type)."""
-    return [r.to_dict() for r in load_rules(year, msgtype)]
+def list_rules(year: int, msgtype: str, enforced_only: bool = False) -> List[dict]:
+    """Return metadata for the rules registered for a (year, message type).
+
+    With ``enforced_only=True`` only the enforceable (mechanically-checked) rules
+    are returned, omitting advisory/catalogue-only ones.
+    """
+    rules = [r.to_dict() for r in load_rules(year, msgtype)]
+    if enforced_only:
+        rules = [r for r in rules if r["enforced"]]
+    return rules
 
 
 def available(year: int) -> List[str]:

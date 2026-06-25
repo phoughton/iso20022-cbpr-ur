@@ -109,6 +109,26 @@ def test_cli_format_json_alias_matches_json_flag(capsys):
     assert json.loads(via_format)["message_type"] == "pacs.008"
 
 
+def test_cli_enforced_lists_only_enforced(capsys):
+    rc = cli.main(["--enforced", "--year", "2025", "--type", "pacs.008"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "(advisory)" not in out
+    assert "pacs.008:VAL-IBAN" in out
+
+
+def test_cli_enforced_json_all_enforced(capsys):
+    rc = cli.main(["--enforced", "--year", "2025", "--type", "pacs.008", "--json"])
+    payload = json.loads(capsys.readouterr().out)
+    assert rc == 0
+    assert payload and all(r["enforced"] is True for r in payload)
+
+
+def test_cli_enforced_requires_type(capsys):
+    rc = cli.main(["--enforced", "--year", "2025"])
+    assert rc == 2
+
+
 def test_cli_example_prints_valid_xml(capsys):
     rc = cli.main(["--example", "max", "--year", "2025", "--type", "pacs.008"])
     out = capsys.readouterr().out
