@@ -4,7 +4,7 @@ This package is AI generated. See the README for details and caveats.
 """
 from __future__ import annotations
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 from .models import Rule, Severity, Violation
 from .engine import (
@@ -14,6 +14,16 @@ from .engine import (
     available,
     example_message,
     example_variants,
+)
+from .idgen import (
+    generate_iban,
+    generate_lei,
+    generate_bic,
+    generate_uuid,
+    generate_uetr,
+    generate_mid,
+    counting_string,
+    counting_sequence,
 )
 
 __all__ = [
@@ -27,4 +37,12 @@ __all__ = [
     "available",
     "example_message",
     "example_variants",
+    "generate_iban",
+    "generate_lei",
+    "generate_bic",
+    "generate_uuid",
+    "generate_uetr",
+    "generate_mid",
+    "counting_string",
+    "counting_sequence",
 ]

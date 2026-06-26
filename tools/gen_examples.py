@@ -39,20 +39,30 @@ MSGTYPES = [
     "pacs.004", "pacs.002", "pain.001", "camt.052", "camt.054",
 ]
 
-# ---------------------------------------------------------------------------
-# Fictitious value bank — algorithmically valid, obviously synthetic, distinct
-# from any on-disk sample. Cross-field usage rules are satisfied by reusing the
-# same From/To/agent BICs and threading the MsgId; see _postprocess.
-# ---------------------------------------------------------------------------
-BIC_FROM = "EXMPGB2LXXX"       # valid structure, GB country
-BIC_TO = "EXMPUS33XXX"         # valid structure, US country (outside the CBPR+
-                               # "domestic country couple" list, so cross-border)
-IBAN_DR = "GB82WEST12345698765432"   # canonical valid example IBAN
-IBAN_CR = "DE89370400440532013000"   # valid example IBAN (mod-97 ok)
-LEI_VAL = "529900T8BM49AURSDO55"     # valid ISO 17442 check digits
+from cbpr_rules import idgen  # noqa: E402
+
 DATETIME = "2026-01-01T10:00:00+00:00"
 DATE = "2026-01-01"
 TIME = "10:00:00+00:00"
+
+# Per-example value bank, filled deterministically by idgen from the seed
+# `{mode}_{year}_{msgtype}` at the start of each generation. Cross-field usage
+# rules are satisfied by reusing one value per role (From == InstructingAgt,
+# etc.); the leg countries (from=GB, to=US) keep the debtor/creditor agent
+# couple cross-border (avoids the domestic-couple rules). See _set_bank.
+BANK = {
+    "bic_from": "EXMPGB2LXXX", "bic_to": "EXMPUS33XXX",
+    "iban": "GB82WEST12345698765432", "lei": "529900T8BM49AURSDO55",
+    "uetr": "11111111-1111-4111-8111-111111111111",
+}
+
+
+def _set_bank(seed):
+    BANK["bic_from"] = idgen.generate_bic(country="GB", seed=f"{seed}:from")
+    BANK["bic_to"] = idgen.generate_bic(country="US", seed=f"{seed}:to")
+    BANK["iban"] = idgen.generate_iban("GB", seed=f"{seed}:iban")
+    BANK["lei"] = idgen.generate_lei(seed=f"{seed}:lei")
+    BANK["uetr"] = idgen.generate_uetr(idgen.deterministic_int(f"{seed}:uetr", 1, 2**63))
 
 # Optional elements whose content we cannot meaningfully synthesise (xmldsig
 # signature, open SupplementaryData). Skipped during generation.
@@ -100,22 +110,19 @@ def _restriction(st_node):
     return st_node.find(f"{XS}restriction")
 
 
-UUID_VAL = "11111111-1111-4111-8111-111111111111"
-
-
 def _text_for_simple(schema, type_name, st_node, elem_name):
-    """Pick a schema-valid, anonymised text value for a simple type."""
+    """Pick a schema-valid, anonymised value for a simple type from the bank."""
     name = type_name or ""
     en = elem_name or ""
     # By well-known ISO 20022 type name.
     if "BICFI" in name or "AnyBIC" in name:
-        return BIC_FROM
+        return BANK["bic_from"]
     if "IBAN" in name:
-        return IBAN_DR
+        return BANK["iban"]
     if "LEIIdentifier" in name:
-        return LEI_VAL
+        return BANK["lei"]
     if "UUID" in name or en == "UETR":
-        return UUID_VAL
+        return BANK["uetr"]
     if "CountryCode" in name or name == "Country":
         return "GB"
     if "CurrencyCode" in name:
@@ -172,12 +179,12 @@ def _from_pattern(pat):
         return None
     p = pat
     if "{8,8}-" in p or "4[a-f0-9]" in p.lower() or "uuid" in p.lower():
-        return UUID_VAL
+        return BANK["uetr"]
     # Phone number, e.g. \+[0-9]{1,3}-[0-9()+\-]{1,30}
     if p.startswith(r"\+") or p.startswith("[+]") or p.startswith("+"):
         return "+1-1234567890"
     if "[A-Z0-9]{4,4}[A-Z]{2,2}" in p:  # BIC
-        return BIC_FROM
+        return BANK["bic_from"]
     if "[A-Z]{2,2}[A-Z0-9]{9,9}" in p:  # ISIN: 2 letters + 9 alnum + 1 digit
         return "GB0000000001"
     if p.startswith("[A-Z]{2"):
@@ -383,6 +390,7 @@ def generate(year, msgtype, mode):
     hdr_xsd = _head_xsd(year)
     if not doc_xsd or not hdr_xsd:
         return None, f"missing XSD for {msgtype} {year}"
+    _set_bank(f"{mode}_{year}_{msgtype}")
     doc, doc_ns = build_document(doc_xsd, mode)
     hdr, hdr_ns = build_apphdr(hdr_xsd, mode)
     env = etree.Element("Envelope")
@@ -438,11 +446,11 @@ def _bic_side(el):
     while anc is not None:
         ln = _localname(anc.tag)
         if ln in _BIC_TO_ANC:
-            return BIC_TO
+            return BANK["bic_to"]
         if ln in _BIC_FROM_ANC:
-            return BIC_FROM
+            return BANK["bic_from"]
         anc = anc.getparent()
-    return BIC_FROM
+    return BANK["bic_from"]
 
 
 def _postprocess(env, doc_ns, msgtype):

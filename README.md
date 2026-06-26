@@ -117,8 +117,31 @@ xml = cbpr_rules.example_message(2025, "pacs.008", "max")   # variant defaults t
 cbpr_rules.example_variants(2025, "pacs.008")               # ['min', 'max']
 ```
 
-The data is **fictitious** (synthetic BICs/IBANs/LEIs, `EXAMPLE` names) and does
+The data is **fictitious** (synthetic, generated BICs/IBANs/LEIs) and does
 not reproduce any real sample — use them as starting templates, not real payments.
+
+---
+
+## Generating identifiers
+
+The example values above are produced by a small **deterministic** ID generator
+(the "Counting Strings" algorithm — no `random`/`uuid`, same seed → same output).
+Every generated id is structurally valid and passes the tool's own validators.
+
+```bash
+cbpr-validate --generate iban --country AT --seed s1     # ISO 13616 + mod-97
+cbpr-validate --generate lei  --seed acme                # ISO 17442 + check digits
+cbpr-validate --generate bic  --bank JSBP --country GB   # -> JSBPGB..XXX
+cbpr-validate --generate uuid --count 3                  # RFC 4122 v4 (UETR)
+cbpr-validate --generate mid  --country GB               # message identifier
+```
+```python
+from cbpr_rules import generate_iban, generate_lei, generate_bic, generate_uetr
+generate_iban("DE", seed="acme")   # deterministic, valid German IBAN
+generate_bic(country="GB", seed="acme")
+```
+
+IBAN generation supports the 27 EU countries plus GB.
 
 ---
 

@@ -62,19 +62,35 @@ def _existing_sample_texts():
     return out
 
 
-def test_examples_are_synthetic_not_copies():
+def _identifiers(xml):
+    root = etree.fromstring(xml.encode())
+    out = {"BICFI": [], "IBAN": [], "LEI": []}
+    for el in root.iter():
+        ln = el.tag.rsplit("}", 1)[-1] if isinstance(el.tag, str) else ""
+        if ln in out and el.text:
+            out[ln].append(el.text.strip())
+    return out
+
+
+def test_examples_are_synthetic_and_valid():
+    from cbpr_rules.validators import is_valid_bic, is_valid_iban, is_valid_lei
+
     existing = _existing_sample_texts()
-    # The synthetic From BIC is used by the examples but appears in no real sample.
-    assert not any("EXMPGB2LXXX" in t for t in existing)
-    uses_marker = False
+    validators = {"BICFI": is_valid_bic, "IBAN": is_valid_iban, "LEI": is_valid_lei}
+    seen_any = False
     for year in YEARS:
         for msgtype in c.available(year):
             for variant in VARIANTS:
                 xml = c.example_message(year, msgtype, variant)
-                norm = "".join(xml.split())
-                assert norm not in existing, (year, msgtype, variant)
-                uses_marker = uses_marker or "EXMPGB2LXXX" in xml
-    assert uses_marker  # at least the payment examples carry the synthetic BIC
+                # No example reproduces an on-disk sample.
+                assert "".join(xml.split()) not in existing, (year, msgtype, variant)
+                for kind, values in _identifiers(xml).items():
+                    for v in values:
+                        seen_any = True
+                        # Generated identifiers are valid and appear in no real sample.
+                        assert validators[kind](v), (year, msgtype, variant, kind, v)
+                        assert not any(v in t for t in existing), (kind, v)
+    assert seen_any  # examples actually contain generated identifiers
 
 
 def test_unknown_example_raises():

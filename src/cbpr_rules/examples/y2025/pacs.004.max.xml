@@ -5,14 +5,14 @@
     <Fr>
       <FIId>
         <FinInstnId>
-          <BICFI>EXMPGB2LXXX</BICFI>
+          <BICFI>WXYZGB67XXX</BICFI>
           <ClrSysMmbId>
             <ClrSysId>
               <Cd>EXCd</Cd>
             </ClrSysId>
             <MmbId>EXMmbId</MmbId>
           </ClrSysMmbId>
-          <LEI>529900T8BM49AURSDO55</LEI>
+          <LEI>213800IJKLMNOPQR6732</LEI>
           <Nm>EXNm</Nm>
           <PstlAdr>
             <AdrTp>
@@ -48,7 +48,7 @@
         </FinInstnId>
         <BrnchId>
           <Id>EXId</Id>
-          <LEI>529900T8BM49AURSDO55</LEI>
+          <LEI>213800IJKLMNOPQR6732</LEI>
           <Nm>EXNm</Nm>
           <PstlAdr>
             <AdrTp>
@@ -80,14 +80,14 @@
     <To>
       <FIId>
         <FinInstnId>
-          <BICFI>EXMPUS33XXX</BICFI>
+          <BICFI>LMNOUSRSXXX</BICFI>
           <ClrSysMmbId>
             <ClrSysId>
               <Cd>EXCd</Cd>
             </ClrSysId>
             <MmbId>EXMmbId</MmbId>
           </ClrSysMmbId>
-          <LEI>529900T8BM49AURSDO55</LEI>
+          <LEI>213800IJKLMNOPQR6732</LEI>
           <Nm>EXNm</Nm>
           <PstlAdr>
             <AdrTp>
@@ -123,7 +123,7 @@
         </FinInstnId>
         <BrnchId>
           <Id>EXId</Id>
-          <LEI>529900T8BM49AURSDO55</LEI>
+          <LEI>213800IJKLMNOPQR6732</LEI>
           <Nm>EXNm</Nm>
           <PstlAdr>
             <AdrTp>
@@ -169,14 +169,14 @@
       <Fr>
         <FIId>
           <FinInstnId>
-            <BICFI>EXMPGB2LXXX</BICFI>
+            <BICFI>WXYZGB67XXX</BICFI>
             <ClrSysMmbId>
               <ClrSysId>
                 <Cd>EXCd</Cd>
               </ClrSysId>
               <MmbId>EXMmbId</MmbId>
             </ClrSysMmbId>
-            <LEI>529900T8BM49AURSDO55</LEI>
+            <LEI>213800IJKLMNOPQR6732</LEI>
             <Nm>EXNm</Nm>
             <PstlAdr>
               <AdrTp>
@@ -212,7 +212,7 @@
           </FinInstnId>
           <BrnchId>
             <Id>EXId</Id>
-            <LEI>529900T8BM49AURSDO55</LEI>
+            <LEI>213800IJKLMNOPQR6732</LEI>
             <Nm>EXNm</Nm>
             <PstlAdr>
               <AdrTp>
@@ -244,14 +244,14 @@
       <To>
         <FIId>
           <FinInstnId>
-            <BICFI>EXMPUS33XXX</BICFI>
+            <BICFI>LMNOUSRSXXX</BICFI>
             <ClrSysMmbId>
               <ClrSysId>
                 <Cd>EXCd</Cd>
               </ClrSysId>
               <MmbId>EXMmbId</MmbId>
             </ClrSysMmbId>
-            <LEI>529900T8BM49AURSDO55</LEI>
+            <LEI>213800IJKLMNOPQR6732</LEI>
             <Nm>EXNm</Nm>
             <PstlAdr>
               <AdrTp>
@@ -287,7 +287,7 @@
           </FinInstnId>
           <BrnchId>
             <Id>EXId</Id>
-            <LEI>529900T8BM49AURSDO55</LEI>
+            <LEI>213800IJKLMNOPQR6732</LEI>
             <Nm>EXNm</Nm>
             <PstlAdr>
               <AdrTp>
@@ -367,7 +367,7 @@
         <OrgnlInstrId>EXOrgnlInstrId</OrgnlInstrId>
         <OrgnlEndToEndId>EXOrgnlEndToEndId</OrgnlEndToEndId>
         <OrgnlTxId>EXOrgnlTxId</OrgnlTxId>
-        <OrgnlUETR>11111111-1111-4111-8111-111111111111</OrgnlUETR>
+        <OrgnlUETR>00000000-0000-4000-aba0-f01737e46554</OrgnlUETR>
         <OrgnlClrSysRef>EXOrgnlClrSysRef</OrgnlClrSysRef>
         <OrgnlIntrBkSttlmAmt Ccy="EUR">1000.00</OrgnlIntrBkSttlmAmt>
         <OrgnlIntrBkSttlmDt>2026-01-01</OrgnlIntrBkSttlmDt>
@@ -385,14 +385,14 @@
           <Amt Ccy="EUR">1000.00</Amt>
           <Agt>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -417,26 +417,26 @@
         <ClrSysRef>EXClrSysRef</ClrSysRef>
         <InstgAgt>
           <FinInstnId>
-            <BICFI>EXMPGB2LXXX</BICFI>
+            <BICFI>WXYZGB67XXX</BICFI>
             <ClrSysMmbId>
               <ClrSysId>
                 <Cd>EXCd</Cd>
               </ClrSysId>
               <MmbId>EXMmbId</MmbId>
             </ClrSysMmbId>
-            <LEI>529900T8BM49AURSDO55</LEI>
+            <LEI>213800IJKLMNOPQR6732</LEI>
           </FinInstnId>
         </InstgAgt>
         <InstdAgt>
           <FinInstnId>
-            <BICFI>EXMPUS33XXX</BICFI>
+            <BICFI>LMNOUSRSXXX</BICFI>
             <ClrSysMmbId>
               <ClrSysId>
                 <Cd>EXCd</Cd>
               </ClrSysId>
               <MmbId>EXMmbId</MmbId>
             </ClrSysMmbId>
-            <LEI>529900T8BM49AURSDO55</LEI>
+            <LEI>213800IJKLMNOPQR6732</LEI>
           </FinInstnId>
         </InstdAgt>
         <RtrChain>
@@ -562,14 +562,14 @@
           </InitgPty>
           <DbtrAgt>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -592,14 +592,14 @@
           </DbtrAgt>
           <PrvsInstgAgt1>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -622,14 +622,14 @@
           </PrvsInstgAgt1>
           <PrvsInstgAgt2>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -652,14 +652,14 @@
           </PrvsInstgAgt2>
           <PrvsInstgAgt3>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -682,14 +682,14 @@
           </PrvsInstgAgt3>
           <IntrmyAgt1>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -712,14 +712,14 @@
           </IntrmyAgt1>
           <IntrmyAgt2>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -742,14 +742,14 @@
           </IntrmyAgt2>
           <IntrmyAgt3>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -772,14 +772,14 @@
           </IntrmyAgt3>
           <CdtrAgt>
             <FinInstnId>
-              <BICFI>EXMPUS33XXX</BICFI>
+              <BICFI>LMNOUSRSXXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -1003,14 +1003,14 @@
             </SttlmAcct>
             <InstgRmbrsmntAgt>
               <FinInstnId>
-                <BICFI>EXMPGB2LXXX</BICFI>
+                <BICFI>WXYZGB67XXX</BICFI>
                 <ClrSysMmbId>
                   <ClrSysId>
                     <Cd>EXCd</Cd>
                   </ClrSysId>
                   <MmbId>EXMmbId</MmbId>
                 </ClrSysMmbId>
-                <LEI>529900T8BM49AURSDO55</LEI>
+                <LEI>213800IJKLMNOPQR6732</LEI>
                 <Nm>EXNm</Nm>
                 <PstlAdr>
                   <Dept>EXDept</Dept>
@@ -1055,14 +1055,14 @@
             </InstgRmbrsmntAgtAcct>
             <InstdRmbrsmntAgt>
               <FinInstnId>
-                <BICFI>EXMPUS33XXX</BICFI>
+                <BICFI>LMNOUSRSXXX</BICFI>
                 <ClrSysMmbId>
                   <ClrSysId>
                     <Cd>EXCd</Cd>
                   </ClrSysId>
                   <MmbId>EXMmbId</MmbId>
                 </ClrSysMmbId>
-                <LEI>529900T8BM49AURSDO55</LEI>
+                <LEI>213800IJKLMNOPQR6732</LEI>
                 <Nm>EXNm</Nm>
                 <PstlAdr>
                   <Dept>EXDept</Dept>
@@ -1107,14 +1107,14 @@
             </InstdRmbrsmntAgtAcct>
             <ThrdRmbrsmntAgt>
               <FinInstnId>
-                <BICFI>EXMPGB2LXXX</BICFI>
+                <BICFI>WXYZGB67XXX</BICFI>
                 <ClrSysMmbId>
                   <ClrSysId>
                     <Cd>EXCd</Cd>
                   </ClrSysId>
                   <MmbId>EXMmbId</MmbId>
                 </ClrSysMmbId>
-                <LEI>529900T8BM49AURSDO55</LEI>
+                <LEI>213800IJKLMNOPQR6732</LEI>
                 <Nm>EXNm</Nm>
                 <PstlAdr>
                   <Dept>EXDept</Dept>
@@ -1219,14 +1219,14 @@
               </OrgnlCdtrSchmeId>
               <OrgnlCdtrAgt>
                 <FinInstnId>
-                  <BICFI>EXMPGB2LXXX</BICFI>
+                  <BICFI>WXYZGB67XXX</BICFI>
                   <ClrSysMmbId>
                     <ClrSysId>
                       <Cd>EXCd</Cd>
                     </ClrSysId>
                     <MmbId>EXMmbId</MmbId>
                   </ClrSysMmbId>
-                  <LEI>529900T8BM49AURSDO55</LEI>
+                  <LEI>213800IJKLMNOPQR6732</LEI>
                   <Nm>EXNm</Nm>
                   <PstlAdr>
                     <Dept>EXDept</Dept>
@@ -1331,14 +1331,14 @@
               </OrgnlDbtrAcct>
               <OrgnlDbtrAgt>
                 <FinInstnId>
-                  <BICFI>EXMPGB2LXXX</BICFI>
+                  <BICFI>WXYZGB67XXX</BICFI>
                   <ClrSysMmbId>
                     <ClrSysId>
                       <Cd>EXCd</Cd>
                     </ClrSysId>
                     <MmbId>EXMmbId</MmbId>
                   </ClrSysMmbId>
-                  <LEI>529900T8BM49AURSDO55</LEI>
+                  <LEI>213800IJKLMNOPQR6732</LEI>
                   <Nm>EXNm</Nm>
                   <PstlAdr>
                     <Dept>EXDept</Dept>
@@ -1514,14 +1514,14 @@
           </DbtrAcct>
           <DbtrAgt>
             <FinInstnId>
-              <BICFI>EXMPGB2LXXX</BICFI>
+              <BICFI>WXYZGB67XXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>
@@ -1566,14 +1566,14 @@
           </DbtrAgtAcct>
           <CdtrAgt>
             <FinInstnId>
-              <BICFI>EXMPUS33XXX</BICFI>
+              <BICFI>LMNOUSRSXXX</BICFI>
               <ClrSysMmbId>
                 <ClrSysId>
                   <Cd>EXCd</Cd>
                 </ClrSysId>
                 <MmbId>EXMmbId</MmbId>
               </ClrSysMmbId>
-              <LEI>529900T8BM49AURSDO55</LEI>
+              <LEI>213800IJKLMNOPQR6732</LEI>
               <Nm>EXNm</Nm>
               <PstlAdr>
                 <Dept>EXDept</Dept>

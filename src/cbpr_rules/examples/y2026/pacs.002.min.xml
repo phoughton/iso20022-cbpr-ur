@@ -23,16 +23,16 @@
           <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
         </OrgnlGrpInf>
         <OrgnlEndToEndId>EXOrgnlEndToEndId</OrgnlEndToEndId>
-        <OrgnlUETR>11111111-1111-4111-8111-111111111111</OrgnlUETR>
+        <OrgnlUETR>00000000-0000-4000-b221-320f10bbfde1</OrgnlUETR>
         <TxSts>EXTx</TxSts>
         <InstgAgt>
           <FinInstnId>
-            <BICFI>EXMPGB2LXXX</BICFI>
+            <BICFI>TUVWGBFGXXX</BICFI>
           </FinInstnId>
         </InstgAgt>
         <InstdAgt>
           <FinInstnId>
-            <BICFI>EXMPUS33XXX</BICFI>
+            <BICFI>IJKLUS01XXX</BICFI>
           </FinInstnId>
         </InstdAgt>
       </TxInfAndSts>

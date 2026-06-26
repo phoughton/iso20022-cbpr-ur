@@ -25,7 +25,7 @@
         <PmtId>
           <InstrId>EXInstrId</InstrId>
           <EndToEndId>EXEndToEndId</EndToEndId>
-          <UETR>11111111-1111-4111-8111-111111111111</UETR>
+          <UETR>00000000-0000-4000-9c70-e74243bdb3b6</UETR>
         </PmtId>
         <IntrBkSttlmAmt Ccy="EUR">1000.00</IntrBkSttlmAmt>
         <IntrBkSttlmDt>2026-01-01</IntrBkSttlmDt>
@@ -33,12 +33,12 @@
         <ChrgBr>SHAR</ChrgBr>
         <InstgAgt>
           <FinInstnId>
-            <BICFI>EXMPGB2LXXX</BICFI>
+            <BICFI>OPQRGBGHXXX</BICFI>
           </FinInstnId>
         </InstgAgt>
         <InstdAgt>
           <FinInstnId>
-            <BICFI>EXMPUS33XXX</BICFI>
+            <BICFI>DEFGUSDEXXX</BICFI>
           </FinInstnId>
         </InstdAgt>
         <Dbtr>
@@ -46,12 +46,12 @@
         </Dbtr>
         <DbtrAgt>
           <FinInstnId>
-            <BICFI>EXMPGB2LXXX</BICFI>
+            <BICFI>OPQRGBGHXXX</BICFI>
           </FinInstnId>
         </DbtrAgt>
         <CdtrAgt>
           <FinInstnId>
-            <BICFI>EXMPUS33XXX</BICFI>
+            <BICFI>DEFGUSDEXXX</BICFI>
           </FinInstnId>
         </CdtrAgt>
         <Cdtr>
@@ -59,7 +59,7 @@
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>GB82WEST12345698765432</IBAN>
+            <IBAN>GB91VWXY45678956789012</IBAN>
           </Id>
         </CdtrAcct>
       </CdtTrfTxInf>

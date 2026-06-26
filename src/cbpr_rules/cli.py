@@ -9,6 +9,7 @@ import textwrap
 from typing import List, Optional
 
 from . import __version__
+from . import idgen
 from .engine import (
     ValidationError,
     available,
@@ -17,6 +18,29 @@ from .engine import (
     validate_file,
     validate_string,
 )
+
+
+def _generate(args) -> List[str]:
+    """Produce the ``--generate`` output lines (one id per --count)."""
+    kind = args.generate
+    out: List[str] = []
+    for i in range(max(args.count, 1)):
+        seed = f"{args.seed}:{i}" if args.count > 1 else args.seed
+        if kind == "iban":
+            if not args.country:
+                raise ValueError("--generate iban requires --country (e.g. --country AT)")
+            out.append(idgen.generate_iban(args.country, seed))
+        elif kind == "lei":
+            out.append(idgen.generate_lei(seed))
+        elif kind == "bic":
+            out.append(idgen.generate_bic(args.bank, args.country or "GB", args.branch, seed))
+        elif kind in ("uuid", "uetr"):
+            out.append(idgen.generate_uuid(idgen.deterministic_int(seed or str(i), 0, 2**63)))
+        elif kind == "mid":
+            out.append(idgen.generate_mid("CBPR", args.country or "GB", i + 1))
+        elif kind == "text":
+            out.append(idgen.deterministic_string(seed or "text", 16))
+    return out
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -72,6 +96,17 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Root element tag wrapping the AppHdr+Document in --example output "
         "(default: Envelope).",
     )
+    p.add_argument(
+        "--generate",
+        choices=("iban", "lei", "bic", "uuid", "uetr", "mid", "text"),
+        help="Generate a deterministic, structurally-valid identifier and print it "
+        "(use --seed/--country/--bank/--branch/--count to control output).",
+    )
+    p.add_argument("--seed", default="", help="Seed for --generate (same seed -> same output).")
+    p.add_argument("--country", help="Country code for --generate iban/bic/mid (e.g. AT, GB).")
+    p.add_argument("--bank", help="Bank code for --generate bic (4 letters, padded with X).")
+    p.add_argument("--branch", default="XXX", help="Branch code for --generate bic (default XXX).")
+    p.add_argument("--count", type=int, default=1, help="How many ids to generate (default 1).")
     p.add_argument(
         "--list",
         action="store_true",
@@ -209,6 +244,15 @@ def main(argv: Optional[List[str]] = None) -> int:
             return 2
         types = available(args.year)
         print(json.dumps(types) if args.json else "\n".join(types))
+        return 0
+
+    if args.generate:
+        try:
+            for line in _generate(args):
+                print(line)
+        except (ValueError, ValidationError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
         return 0
 
     if args.example:

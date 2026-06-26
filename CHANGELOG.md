@@ -4,6 +4,18 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0]
+
+### Added
+- Deterministic **ID generation** library (`cbpr_rules.idgen`, "Counting Strings"
+  algorithm — no `random`/`uuid`): `generate_iban`, `generate_lei`, `generate_bic`,
+  `generate_uuid`/`generate_uetr`, `generate_mid`, plus `counting_string`/
+  `counting_sequence` and seeded helpers. Every id is structurally valid and passes
+  the package's own validators; same seed → same output. New CLI
+  `cbpr-validate --generate {iban,lei,bic,uuid,uetr,mid,text}` (with
+  `--seed/--country/--bank/--branch/--count`). The bundled example messages now
+  source their identifiers from this library (seeded per example).
+
 ## [0.4.0]
 
 ### Added

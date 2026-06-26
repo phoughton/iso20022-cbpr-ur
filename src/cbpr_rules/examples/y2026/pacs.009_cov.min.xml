@@ -25,18 +25,18 @@
         <PmtId>
           <InstrId>EXInstrId</InstrId>
           <EndToEndId>EXEndToEndId</EndToEndId>
-          <UETR>11111111-1111-4111-8111-111111111111</UETR>
+          <UETR>00000000-0000-4000-b9f7-e4bcfed50dde</UETR>
         </PmtId>
         <IntrBkSttlmAmt Ccy="EUR">1000.00</IntrBkSttlmAmt>
         <IntrBkSttlmDt>2026-01-01</IntrBkSttlmDt>
         <InstgAgt>
           <FinInstnId>
-            <BICFI>EXMPGB2LXXX</BICFI>
+            <BICFI>ABCDGBWXXXX</BICFI>
           </FinInstnId>
         </InstgAgt>
         <InstdAgt>
           <FinInstnId>
-            <BICFI>EXMPUS33XXX</BICFI>
+            <BICFI>PQRSUS56XXX</BICFI>
           </FinInstnId>
         </InstdAgt>
         <Dbtr>

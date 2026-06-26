@@ -24,19 +24,19 @@
       <TxInf>
         <RtrId>EXRtrId</RtrId>
         <OrgnlEndToEndId>EXOrgnlEndToEndId</OrgnlEndToEndId>
-        <OrgnlUETR>11111111-1111-4111-8111-111111111111</OrgnlUETR>
+        <OrgnlUETR>00000000-0000-4000-b221-322107c494c7</OrgnlUETR>
         <RtrdIntrBkSttlmAmt Ccy="EUR">1000.00</RtrdIntrBkSttlmAmt>
         <IntrBkSttlmDt>2026-01-01</IntrBkSttlmDt>
         <RtrdInstdAmt Ccy="EUR">1000.00</RtrdInstdAmt>
         <ChrgBr>SHAR</ChrgBr>
         <InstgAgt>
           <FinInstnId>
-            <BICFI>EXMPGB2LXXX</BICFI>
+            <BICFI>VWXYGB12XXX</BICFI>
           </FinInstnId>
         </InstgAgt>
         <InstdAgt>
           <FinInstnId>
-            <BICFI>EXMPUS33XXX</BICFI>
+            <BICFI>KLMNUSYZXXX</BICFI>
           </FinInstnId>
         </InstdAgt>
         <RtrChain>

@@ -109,6 +109,27 @@ def test_cli_format_json_alias_matches_json_flag(capsys):
     assert json.loads(via_format)["message_type"] == "pacs.008"
 
 
+def test_cli_generate_iban_valid_and_deterministic(capsys):
+    from cbpr_rules.validators import is_valid_iban
+
+    assert cli.main(["--generate", "iban", "--country", "AT", "--seed", "s1"]) == 0
+    first = capsys.readouterr().out.strip()
+    assert is_valid_iban(first)
+    cli.main(["--generate", "iban", "--country", "AT", "--seed", "s1"])
+    assert capsys.readouterr().out.strip() == first  # same seed -> same output
+
+
+def test_cli_generate_bic_and_count(capsys):
+    cli.main(["--generate", "bic", "--bank", "JSBP", "--country", "GB"])
+    assert capsys.readouterr().out.strip().startswith("JSBPGB")
+    assert cli.main(["--generate", "uuid", "--count", "3"]) == 0
+    assert len(capsys.readouterr().out.strip().splitlines()) == 3
+
+
+def test_cli_generate_unknown_country_errors(capsys):
+    assert cli.main(["--generate", "iban", "--country", "ZZ"]) == 2
+
+
 def test_cli_enforced_lists_only_enforced(capsys):
     rc = cli.main(["--enforced", "--year", "2025", "--type", "pacs.008"])
     out = capsys.readouterr().out
