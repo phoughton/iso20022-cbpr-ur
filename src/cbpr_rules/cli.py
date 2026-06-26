@@ -270,13 +270,17 @@ def main(argv: Optional[List[str]] = None) -> int:
         if args.year is None or args.msgtype is None:
             print("error: --year and --type are required for --list", file=sys.stderr)
             return 2
-        rules = list_rules(args.year, args.msgtype, enforced_only=args.enforced)
+        rules = list_rules(
+            args.year, args.msgtype, enforced_only=args.enforced, with_xpaths=True
+        )
         if args.json:
             print(json.dumps(rules, indent=2))
         else:
             for r in rules:
                 flag = "" if r["enforced"] else " (advisory)"
                 print(f"{r['rule_number']} - {r['name']}{flag}")
+                for xp in r.get("xpaths", []):
+                    print(f"    {xp}")
         return 0
 
     if args.year is None:

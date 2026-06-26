@@ -95,15 +95,64 @@ def validate_string(xml: str, year: int, msgtype: Optional[str] = None, xsd=None
     return _validate_tree(tree, year, msgtype, xsd)
 
 
-def list_rules(year: int, msgtype: str, enforced_only: bool = False) -> List[dict]:
+def _drop_redundant_bare_paths(paths: set) -> List[str]:
+    """Tidy captured paths: drop a bare element path when an ``@attribute`` variant
+    exists, and a ``//Name`` wildcard when concrete paths for that name exist."""
+    attr_bases = {p.rsplit("/@", 1)[0] for p in paths if "/@" in p}
+    wild_names = {p[2:] for p in paths if p.startswith("//")}
+    concrete = {p.rsplit("/", 1)[-1].lstrip("@") for p in paths if not p.startswith("//")}
+    kept = set()
+    for p in paths:
+        if p.startswith("//") and p[2:] in concrete:
+            continue
+        if "/@" not in p and p in attr_bases:
+            continue
+        kept.add(p)
+    return sorted(kept)
+
+
+def rule_xpaths(year: int, msgtype: str) -> dict:
+    """Map each rule_number to the concrete xpaths it touches.
+
+    Derived by running each rule against the bundled min+max example messages
+    and recording the fields its queries read (best-effort; a field absent from
+    both examples and read only inside a non-firing branch may be missed).
+    """
+    rules = load_rules(year, msgtype)
+    captured = {r.rule_number: set() for r in rules}
+    for variant in ("min", "max"):
+        try:
+            xml = example_message(year, msgtype, variant)
+            tree = loader.parse_string(xml)
+        except Exception:
+            continue
+        bah, doc = loader.locate(tree)
+        msg = ParsedMessage(tree, bah, doc, message_type=msgtype, year=year)
+        for r in rules:
+            if not r.enforced:
+                continue
+            with msg.record() as paths:
+                r.run(msg)
+            captured[r.rule_number] |= paths
+    return {num: _drop_redundant_bare_paths(p) for num, p in captured.items()}
+
+
+def list_rules(
+    year: int, msgtype: str, enforced_only: bool = False, with_xpaths: bool = False
+) -> List[dict]:
     """Return metadata for the rules registered for a (year, message type).
 
     With ``enforced_only=True`` only the enforceable (mechanically-checked) rules
-    are returned, omitting advisory/catalogue-only ones.
+    are returned. With ``with_xpaths=True`` each rule dict gains an ``"xpaths"``
+    list of the concrete fields it affects (see ``rule_xpaths``).
     """
     rules = [r.to_dict() for r in load_rules(year, msgtype)]
     if enforced_only:
         rules = [r for r in rules if r["enforced"]]
+    if with_xpaths:
+        paths = rule_xpaths(year, msgtype)
+        for r in rules:
+            r["xpaths"] = paths.get(r["rule_number"], [])
     return rules
 
 

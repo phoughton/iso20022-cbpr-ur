@@ -4,7 +4,7 @@ This package is AI generated. See the README for details and caveats.
 """
 from __future__ import annotations
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 from .models import Rule, Severity, Violation
 from .engine import (

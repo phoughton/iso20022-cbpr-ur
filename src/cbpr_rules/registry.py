@@ -171,15 +171,9 @@ def _currency_rule(msgtype: str) -> Rule:
             )
 
         # Every ``Ccy`` attribute, anywhere in the message.
-        for root in (msg.bah, msg.document):
-            if root is None:
-                continue
-            for el in root.iter():
-                if not isinstance(el.tag, str):
-                    continue
-                code = el.get("Ccy")
-                if code and not is_valid_currency(code):
-                    flag(el, code)
+        for el, code in msg.iter_attr("Ccy"):
+            if code and not is_valid_currency(code):
+                flag(el, code)
         # Standalone ``<Ccy>`` elements (e.g. account currency).
         for el in msg.iter_local("Ccy"):
             code = msg.text_of(el)

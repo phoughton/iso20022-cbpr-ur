@@ -227,6 +227,7 @@ matching is by local name, so namespace prefixes never matter.
 cbpr_rules.available(2025)              # -> ['camt.052', 'pacs.008', ...]
 cbpr_rules.list_rules(2025, "pacs.008") # -> [{rule_number, name, description, severity, enforced}, ...]
 cbpr_rules.list_rules(2025, "pacs.008", enforced_only=True)  # only the enforceable rules
+cbpr_rules.list_rules(2025, "pacs.008", with_xpaths=True)    # + "xpaths" each rule affects
 ```
 
 ```bash
@@ -234,6 +235,24 @@ cbpr-validate --year 2025 --list-types
 cbpr-validate --year 2025 --type pacs.008 --list               # all rules
 cbpr-validate --year 2025 --type pacs.008 --enforced           # enforceable rules only
 ```
+
+The `--list` / `--enforced` output (and `with_xpaths=True`) annotates each rule with
+the **concrete fields it affects**, so you can see exactly which element/attribute a
+rule constrains — handy when several fields share a name (e.g. many `Ctry` fields, but
+a rule targets only one):
+
+```text
+pacs.008:VAL-IBAN - CBPR_Valid_IBAN
+    //IBAN
+pacs.008:VAL-BIC - CBPR_Valid_Agent_BIC
+    /Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI
+pacs.008:R41 - CBPR_Interbank_Settlement_Currency_FormalRule
+    /Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/@Ccy
+```
+
+Paths are derived by running each rule against the bundled example messages
+(best-effort): concrete element paths and `@attribute` targets where present, or a
+`//Name` wildcard for a datatype rule whose element isn't in the examples.
 
 ### Algorithmic field validation
 

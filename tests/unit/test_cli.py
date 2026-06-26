@@ -143,6 +143,16 @@ def test_cli_enforced_json_all_enforced(capsys):
     payload = json.loads(capsys.readouterr().out)
     assert rc == 0
     assert payload and all(r["enforced"] is True for r in payload)
+    # each rule now carries its affected xpaths
+    assert all(isinstance(r.get("xpaths"), list) and r["xpaths"] for r in payload)
+
+
+def test_cli_list_shows_xpaths(capsys):
+    cli.main(["--enforced", "--year", "2025", "--type", "pacs.008"])
+    out = capsys.readouterr().out
+    # xpaths printed indented under their rule
+    assert "\n    /Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" in out
+    assert "/@Ccy" in out
 
 
 def test_cli_enforced_requires_type(capsys):

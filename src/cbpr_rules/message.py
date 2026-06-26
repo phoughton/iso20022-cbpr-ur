@@ -16,9 +16,13 @@ pseudo-code convention.
 """
 from __future__ import annotations
 
+import re
+from contextlib import contextmanager
 from typing import List, Optional
 
 from .loader import local_name
+
+_INDEX_RE = re.compile(r"\[\d+\]")
 
 
 def _split(path: str) -> List[str]:
@@ -54,6 +58,53 @@ class ParsedMessage:
         self.document = document
         self.message_type = message_type
         self.year = year
+        self._rec: Optional[set] = None  # active path recorder, or None
+
+    # -- path recording (for "which fields does a rule touch?") ----------
+    @contextmanager
+    def record(self):
+        """Within this block, collect the normalized xpaths the queries touch."""
+        prev = self._rec
+        self._rec = set()
+        try:
+            yield self._rec
+        finally:
+            self._rec = prev
+
+    def _normalize(self, xpath: str) -> str:
+        """Strip positional ``[n]`` and re-root at /Document or /AppHdr."""
+        xpath = _INDEX_RE.sub("", xpath)
+        segs = xpath.strip("/").split("/")
+        for anchor in ("Document", "AppHdr"):
+            if anchor in segs:
+                return "/" + "/".join(segs[segs.index(anchor):])
+        return xpath
+
+    def _record_elements(self, elements, attr: Optional[str] = None) -> None:
+        if self._rec is None:
+            return
+        for el in elements:
+            if not isinstance(el.tag, str):
+                continue
+            path = self._normalize(self.xpath_of(el))
+            self._rec.add(path + "/@" + attr if attr else path)
+
+    def _record_intent(self, segs: List[str], context) -> None:
+        """Record the intended anchored path of a query, even if it matched nothing."""
+        if self._rec is None or not segs:
+            return
+        head = segs[0]
+        if head == "AppHdr" or head.startswith("BusinessApplicationHeader"):
+            anchored = "/AppHdr/" + "/".join(segs[1:])
+        elif head == "Document":
+            anchored = "/Document/" + "/".join(segs[1:])
+        elif context is not None:
+            rest = segs[1:] if local_name(context) == head else segs
+            base = self._normalize(self.xpath_of(context))
+            anchored = base + ("/" + "/".join(rest) if rest else "")
+        else:
+            return
+        self._rec.add(anchored.rstrip("/"))
 
     # -- element metadata ------------------------------------------------
     def xpath_of(self, el) -> str:
@@ -119,15 +170,17 @@ class ParsedMessage:
             return [context] if context is not None else []
         head = segs[0]
         if head == "AppHdr" or head.startswith("BusinessApplicationHeader"):
-            return _descend([self.bah], segs[1:]) if self.bah is not None else []
-        if head == "Document":
-            return _descend([self.document], segs[1:]) if self.document is not None else []
-        # relative to context
-        if context is not None:
-            if local_name(context) == head:
-                return _descend([context], segs[1:])
-            return _descend([context], segs)
-        return []
+            result = _descend([self.bah], segs[1:]) if self.bah is not None else []
+        elif head == "Document":
+            result = _descend([self.document], segs[1:]) if self.document is not None else []
+        elif context is not None:  # relative to context
+            rest = segs[1:] if local_name(context) == head else segs
+            result = _descend([context], rest)
+        else:
+            result = []
+        self._record_elements(result)
+        self._record_intent(segs, context)
+        return result
 
     def each(self, path: str, context=None) -> List["object"]:
         """Iteration helper - same as find(), named for "for each [path]" rules."""
@@ -152,7 +205,9 @@ class ParsedMessage:
 
         Used for XML attributes such as the currency on an amount (``@Ccy``).
         """
-        return [(el, el.get(attr)) for el in self.find(path, context)]
+        nodes = self.find(path, context)
+        self._record_elements(nodes, attr=attr)
+        return [(el, el.get(attr)) for el in nodes]
 
     def iter_local(self, name: str, roots=None):
         """Yield every descendant (at any depth) with local tag ``name``.
@@ -160,6 +215,8 @@ class ParsedMessage:
         Scans the BAH and Document by default - used by cross-cutting checks
         that apply wherever an element occurs (e.g. every PostalAddress).
         """
+        if self._rec is not None:
+            self._rec.add(f"//{name}")  # wildcard intent (dropped if concrete paths found)
         if roots is None:
             roots = [r for r in (self.bah, self.document) if r is not None]
         for root in roots:
@@ -167,4 +224,18 @@ class ParsedMessage:
                 continue
             for el in root.iter():
                 if local_name(el) == name:
+                    self._record_elements([el])
                     yield el
+
+    def iter_attr(self, attr: str):
+        """Yield (element, value) for every element carrying ``attr`` anywhere.
+
+        Cross-cutting equivalent of ``attr_nodes`` for attributes like ``@Ccy``.
+        """
+        for root in (self.bah, self.document):
+            if root is None:
+                continue
+            for el in root.iter():
+                if isinstance(el.tag, str) and el.get(attr) is not None:
+                    self._record_elements([el], attr=attr)
+                    yield el, el.get(attr)
